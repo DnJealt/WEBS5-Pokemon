@@ -1,8 +1,19 @@
 body {
-  padding: 50px;
-  font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
+  padding: 50px;  
+  font-family: "Trebuchet MS", "Lucida Grande", "Lucida Sans Unicode", "Lucida Sans", Tahoma, sans-serif;
+  padding-top:80px; 
 }
 
 a {
   color: #00B7FF;
+}
+
+.tokentoolong {
+  white-space: nowrap; 
+  overflow-x: scroll;
+}
+
+.fbknopje{
+  background-color: #3b5998;
+  color: white;
 }

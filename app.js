@@ -5,6 +5,14 @@ var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 var exphbs = require('express-handlebars');
+var session = require('express-session');
+var passport = require('passport');
+
+var flash    = require('connect-flash');
+
+// Connect to the database
+var configDb = require('./config/database');
+require('mongoose').connect(configDb.url);
 
 var index = require('./routes/index');
 var users = require('./routes/users');
@@ -23,7 +31,15 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
-app.use('/', index);
+// required for passport
+app.use(session({ secret: 'webs5eindopdraggie' })); // session secret
+app.use(passport.initialize());
+require('./config/passport')(passport);
+app.use(passport.session()); // persistent login sessions
+app.use(flash()); // use connect-flash for flash messages stored in session
+
+
+require('./routes/index.js')(app, passport);
 app.use('/users', users);
 
 // catch 404 and forward to error handler
