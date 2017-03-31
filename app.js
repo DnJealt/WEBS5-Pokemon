@@ -14,7 +14,6 @@ var flash    = require('connect-flash');
 var configDb = require('./config/database');
 require('mongoose').connect(configDb.url);
 
-var index = require('./routes/index');
 var users = require('./routes/users');
 
 var app = express();

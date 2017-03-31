@@ -66,7 +66,6 @@ module.exports = {
     ghost:{
         normal:0,
         fight:0,
-        flying:,
         poison:0.5,
         bug:0.5,
         ghost:2,
