@@ -15,6 +15,7 @@ var configDb = require('./config/database');
 require('mongoose').connect(configDb.url);
 
 var types = require('./routes/types');
+var pokeapi = require('./routes/pokeapi');
 
 var app = express();
 app.disable('x-powered-by');
@@ -41,6 +42,7 @@ app.use(flash()); // use connect-flash for flash messages stored in session
 
 require('./routes/index.js')(app, passport);
 app.use('/matchup', types);
+app.use('/pokeapi', pokeapi);
 
 // catch 404 and forward to error handler
 app.use(function(err, req, res, next) {
