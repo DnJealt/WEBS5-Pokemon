@@ -15,10 +15,7 @@ module.exports = function(app, passport) {
          res.redirect('/index', 301);
     });
     app.get('/', function(req, res) {
-        // router.get('/kaas', function(req, res){
-        //     res.redirect('/index',301);
-        // });
-        // res.redirect('/index', 301);
+        res.redirect('/index', 301);
     });
 
 
