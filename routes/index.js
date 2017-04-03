@@ -7,12 +7,23 @@ module.exports = function(app, passport) {
 // =====================================
 // HOME PAGE (with login links) ========
 // =====================================
+    // Testing if redirects work this way
+    app.get('/auth/fb', function(req, res){
+         res.redirect('/index', 301);
+    });
+    app.get('/auth/google', function(req, res){
+         res.redirect('/index', 301);
+    });
     app.get('/', function(req, res) {
-        res.redirect('/index', 301);
+        // router.get('/kaas', function(req, res){
+        //     res.redirect('/index',301);
+        // });
+        // res.redirect('/index', 301);
     });
 
+
     app.get('/index', function(req, res){
-        res.render('index', { title: "Node Authentication" }); // load the index.ejs file
+        res.render('index', { title: "Pokemon!" });
     });
 
 
@@ -38,7 +49,6 @@ module.exports = function(app, passport) {
     // =====================================
     // show the signup form
     app.get('/signup', function(req, res) {
-
         // render the page and pass in any flash data if it exists
         res.render('signup', { message: req.flash('signupMessage'), title: "Local signup" });
     });

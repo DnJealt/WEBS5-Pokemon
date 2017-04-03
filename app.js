@@ -8,15 +8,16 @@ var exphbs = require('express-handlebars');
 var session = require('express-session');
 var passport = require('passport');
 
-var flash    = require('connect-flash');
+ var flash    = require('connect-flash');
 
 // Connect to the database
 var configDb = require('./config/database');
 require('mongoose').connect(configDb.url);
 
-var users = require('./routes/users');
+var types = require('./routes/types');
 
 var app = express();
+app.disable('x-powered-by');
 
 // view engine setup
 app.engine('hbs', exphbs({extname: 'hbs', defaultLayout: 'main'}));
@@ -39,13 +40,16 @@ app.use(flash()); // use connect-flash for flash messages stored in session
 
 
 require('./routes/index.js')(app, passport);
-app.use('/users', users);
+app.use('/matchup', types);
 
 // catch 404 and forward to error handler
-app.use(function(req, res, next) {
-  var err = new Error('Not Found');
-  err.status = 404;
-  next(err);
+app.use(function(err, req, res, next) {
+  
+    if(!err){
+      err = new Error('Not Found');
+      err.status = 404;
+    }
+    next(err);  
 });
 
 // error handler
@@ -53,10 +57,9 @@ app.use(function(err, req, res, next) {
   // set locals, only providing error in development
   res.locals.message = err.message;
   res.locals.error = req.app.get('env') === 'development' ? err : {};
-
-  // render the error page
   res.status(err.status || 500);
-  res.render('error');
+
+  res.render('error', {statuscode: err.status, message: err.message, extramessage: err.extramessage});
 });
 
 module.exports = app;
