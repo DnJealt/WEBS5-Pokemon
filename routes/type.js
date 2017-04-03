@@ -8,7 +8,8 @@ router.get('/', function(req, res, next) {
    var err = new Error('Bad Request');
        err.status = 400;
        err.extramessage = "Please use /attack or /defend";
-   next(err);
+       res.error = err;
+   next();
 });
 
 router.get('/attack', function(req, res, next){
@@ -18,11 +19,19 @@ router.get('/attack', function(req, res, next){
 router.get('/attack/:type', function(req, res, next){
   var type = req.params.type; 
 
-  var err = new Error('Bad Request');
-  err.status = 400;
-  err.extramessage = "Not yet implemented!";
-  next(err);
-  
+  var result = offending.getEntry(type);
+
+  console.log('result: ' + result);
+
+  if(result){
+    res.status(200).send(result);
+  }
+  else{
+    var err = new Error('Not Found');
+    err.status = 404;
+    err.extramessage = "Type does not exist!";
+    next(err);
+  } 
 
 });
 
@@ -39,10 +48,10 @@ router.get('/defend/:type', function(req,res,next){
     res.status(200).send(result);
   }
   else{
-  var err = new Error('Not Found');
-  err.status = 404;
-  err.extramessage = "Type does not exist!";
-  next(err);
+    var err = new Error('Not Found');
+    err.status = 404;
+    err.extramessage = "Type does not exist!";
+    next(err);
   }
 })
 

@@ -1,6 +1,6 @@
 var express = require('express');
 var path = require('path');
-var favicon = require('serve-favicon');
+// var favicon = require('serve-favicon');
 var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
@@ -14,7 +14,8 @@ var passport = require('passport');
 var configDb = require('./config/database');
 require('mongoose').connect(configDb.url);
 
-var types = require('./routes/types');
+var index = require('./routes/index');
+var type = require('./routes/type');
 
 var app = express();
 app.disable('x-powered-by');
@@ -38,18 +39,21 @@ require('./config/passport')(passport);
 app.use(passport.session()); // persistent login sessions
 app.use(flash()); // use connect-flash for flash messages stored in session
 
+app.use('/', index);
+// require('./routes/user.js')(app, passport);
+app.use('/matchup', type);
 
-require('./routes/index.js')(app, passport);
-app.use('/matchup', types);
 
 // catch 404 and forward to error handler
-app.use(function(err, req, res, next) {
-  
-    if(!err){
-      err = new Error('Not Found');
-      err.status = 404;
-    }
+app.use(function(req, res, next) {
+  if(res.error){
+    next(res.error);
+  }  
+  else{
+    var err = new Error('Not Found');
+    err.status = 404;
     next(err);  
+  }     
 });
 
 // error handler
