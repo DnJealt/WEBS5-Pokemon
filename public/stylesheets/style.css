@@ -1,7 +1,5 @@
 body {
-  padding: 50px;  
   font-family: "Trebuchet MS", "Lucida Grande", "Lucida Sans Unicode", "Lucida Sans", Tahoma, sans-serif;
-  padding-top:80px; 
 }
 
 a {
@@ -15,5 +13,14 @@ a {
 
 .fbknopje{
   background-color: #3b5998;
+  color: white;
+}
+
+.welcome{
+  margin-top: 50px;
+}
+
+#wittetextaub{
+  text-decoration: none;
   color: white;
 }

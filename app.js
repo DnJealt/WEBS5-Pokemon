@@ -40,7 +40,7 @@ app.use(passport.session()); // persistent login sessions
 app.use(flash()); // use connect-flash for flash messages stored in session
 
 app.use('/', index);
-// require('./routes/user.js')(app, passport);
+require('./routes/user.js')(app, passport);
 app.use('/matchup', type);
 
 
@@ -71,7 +71,7 @@ app.use(function(err, req, res, next) {
   }
 
   res.status(statusCode);
-  res.render('error', {statuscode: statusCode, message: err.message, extramessage: err.extramessage});
+  res.render('error', {title: statusCode + " - Pokemon", statuscode: statusCode, message: err.message, extramessage: err.extramessage});
 });
 
 module.exports = app;
