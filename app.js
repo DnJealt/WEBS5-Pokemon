@@ -8,7 +8,8 @@ var exphbs = require('express-handlebars');
 var session = require('express-session');
 var passport = require('passport');
 
- var flash    = require('connect-flash');
+var flash    = require('connect-flash');
+
 
 // Connect to the database
 var configDb = require('./config/database');
@@ -71,7 +72,7 @@ app.use(function(err, req, res, next) {
   }
 
   res.status(statusCode);
-  res.render('error', {title: statusCode + " - Pokemon", statuscode: statusCode, message: err.message, extramessage: err.extramessage});
+  res.render('error', {title: statusCode, statuscode: statusCode, message: err.message, extramessage: err.extramessage});
 });
 
 module.exports = app;
