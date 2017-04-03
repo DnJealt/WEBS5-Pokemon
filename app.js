@@ -44,7 +44,7 @@ app.use('/', index);
 app.use('/matchup', type);
 
 
-// catch 404 and forward to error handler
+// catch 404 and forward to error handler en fuck deze standaard shit het werkt voor geen meter.
 app.use(function(req, res, next) {
   if(res.error){
     next(res.error);
@@ -61,9 +61,17 @@ app.use(function(err, req, res, next) {
   // set locals, only providing error in development
   res.locals.message = err.message;
   res.locals.error = req.app.get('env') === 'development' ? err : {};
-  res.status(err.status || 500);
 
-  res.render('error', {statuscode: err.status, message: err.message, extramessage: err.extramessage});
+  var statusCode = err.status || 500;
+
+  // If we encounter an internal server error, set the messages manually here.
+  if(statusCode === 500){
+    err.extramessage = err.message;
+    err.message = "Internal Server Error";
+  }
+
+  res.status(statusCode);
+  res.render('error', {statuscode: statusCode, message: err.message, extramessage: err.extramessage});
 });
 
 module.exports = app;

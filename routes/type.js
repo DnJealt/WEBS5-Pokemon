@@ -30,7 +30,8 @@ router.get('/attack/:type', function(req, res, next){
     var err = new Error('Not Found');
     err.status = 404;
     err.extramessage = "Type does not exist!";
-    next(err);
+    res.error = err;
+    next();
   } 
 
 });
@@ -51,7 +52,8 @@ router.get('/defend/:type', function(req,res,next){
     var err = new Error('Not Found');
     err.status = 404;
     err.extramessage = "Type does not exist!";
-    next(err);
+    res.error = err;
+    next();
   }
 })
 
