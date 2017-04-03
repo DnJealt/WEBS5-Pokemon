@@ -34,6 +34,7 @@ router.get('/defend/:type', function(req,res,next){
   var type = req.params.type;
 
   var result = defending[type];
+  
   if(result){
     res.status(200).send(result);
   }
