@@ -8,7 +8,7 @@ router.get('/', isLoggedIn, function(req, res, next){
     
     var query = Game.find({});
     query.then(data => {
-        res.render('games', { title: 'Games', user: req.user, games: data });
+        res.render('games', { title: 'Games', user: req.user, games: data, challenger: req.challenger });
     });
     
 });
@@ -26,9 +26,15 @@ router.post('/', isLoggedIn, function(req, res, next){
     }
 });
 
+
 router.delete('/', isAdmin, function(req, res, next){
     
 });
+
+router.put('/', isLoggedIn, function(req, res, next){
+    
+})
+
 
 function saveGame(req, res){
     var newGame = new Game();   
