@@ -65,6 +65,7 @@ module.exports = function(passport) {
                 // if there is no user with that email
                 // create the user
                 var newUser            = new User();
+                newUser.role = 'user';
 
                 // set the user's local credentials
                 newUser.local.email    = email;
@@ -160,6 +161,7 @@ module.exports = function(passport) {
                 } else {
                     // if there is no user found with that facebook id, create them
                     var newUser            = new User();
+                    newUser.role = 'user';
 
                     // set all of the facebook information in our user model
                     newUser.facebook.id    = profile.id; // set the users facebook id                   
@@ -210,6 +212,7 @@ module.exports = function(passport) {
                 } else {
                     // if the user isnt in our database, create a new user
                     var newUser          = new User();
+                    newUser.role = 'user';
 
                     // set all of the relevant information
                     newUser.google.id    = profile.id;
