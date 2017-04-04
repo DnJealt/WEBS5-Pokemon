@@ -27,7 +27,21 @@ router.post('/', isLoggedIn, function(req, res, next){
 });
 
 
-router.delete('/', isAdmin, function(req, res, next){
+router.post('/delete/:id', isAdmin, function(req, res, next){
+    var id = req.params.id;
+    if(id){
+        Game.findByIdAndRemove(id, function(error, document){
+            if(error){
+                console.log(error);
+                next();
+            }
+            else{
+                res.redirect('/game');
+            }
+        });
+        
+    }
+
     
 });
 
@@ -70,7 +84,7 @@ function isLoggedIn(req, res, next) {
 
 // route middleware to make sure a user is logged in
 function isAdmin(req, res, next) {
-
+    console.log(req.user)
     if(req.user){
         if(req.user.role == 'admin');{
             return next();
