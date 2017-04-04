@@ -45,10 +45,22 @@ router.post('/delete/:id', isAdmin, function(req, res, next){
     
 });
 
-router.put('/', isLoggedIn, function(req, res, next){
-    
-})
-
+router.post('/put/:id', isLoggedIn, function(req, res, next){
+    var id = req.params.id;
+    console.log('Voor findbyid: ' + id);
+    if(id){
+        // Game._challenger = req.user;
+        // Game.find({id}).update
+        
+        Game.findByIdAndUpdate(id, { $set: { _challenger: req.user}}, { new: true}, function(err, gameupdate) {
+            if (err) return handleError(err);
+            res.send(gameupdate);
+            console.log('in findbyid: ' + id);
+        });
+        
+    };
+    console.log('na findbyid: ' + id);
+});
 
 function saveGame(req, res){
     var newGame = new Game();   
