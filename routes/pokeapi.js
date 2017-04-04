@@ -5,7 +5,7 @@ var request = require('request');
 router.get('/pokemon/:pokemon', function(req, res, next) {
     var pokemon = req.params.pokemon;
     var pkmnType = {}
-    console.log('hallo: ' + req.params.pokemon);
+    // console.log('hallo: ' + req.params.pokemon);
 
     request('https://pokeapi.co/api/v2/pokemon/' + pokemon +'/', function(error, response, body) {
         // console.log('statusCode: ', response && response.statusCode);
@@ -26,12 +26,10 @@ router.get('/pokemon/:pokemon', function(req, res, next) {
 
 router.get('/allpokemon', function(req, res, next) {
     var allpkmn = [];
-    var pkmnentries = [];
-    var pkmnname = [];
     // console.log('hello');
     
     request('https://pokeapi.co/api/v2/pokedex/1', function(error, response, body){
-        console.log('statusCode: ', response && response.statusCode);
+        // console.log('statusCode: ', response && response.statusCode);
         body = JSON.parse(body);
         body = body.pokemon_entries;
         // res.send(body[0].pokemon_species);
