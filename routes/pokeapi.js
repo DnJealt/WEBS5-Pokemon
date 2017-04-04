@@ -1,7 +1,6 @@
 var express = require('express');
 var router = express.Router();
 var request = require('request');
-var JefNode = require('json-easy-filter').JefNode;
 
 router.get('/pokemon/:pokemon', function(req, res, next) {
     var pokemon = req.params.pokemon;
