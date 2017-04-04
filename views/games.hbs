@@ -15,7 +15,7 @@
                 <th>Creator</th>
                 <th>Started</th>
                 <th>Created On</th>
-                <th><span style="color: white;">Action</span>
+                <th>Challenger</th>
             </tr>
             {{#each games}}
             <tr>
@@ -29,7 +29,19 @@
                 {{/if}}
                 <td>{{HasStarted}}</td>
                 <td>{{Created}}</td>
-                <td>        </td>
+                {{#if _challenger.local.email}}
+                <td>{{_challenger.local.email}}</td>
+                {{else if _challenger.google.email}}
+                <td>{{_challenger.google.email}}</td>
+                {{else if _challenger.facebook.email}}
+                <td>{{_challenger.facebook.email}}</td>
+                {{else}}
+                <td>
+                    <form action="/game/" method="put">
+                        <button type="submit" class="btn btn-danger">Join</buton>
+                    </form>
+                </td>
+                {{/if}}
             </tr>
             {{/each}}
         {{/if}}
