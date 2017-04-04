@@ -1,15 +1,22 @@
 <div class="container">
 
 <div class="header pull-right">
-    <button class="btn-danger"><a id="wittetextaub" href="/user">Login/Register</a></button>
+    {{#if user}}
+    {{else}}
+        <button class="btn-danger"><a id="wittetextaub" href="/user">Login/Register</a></button>
+    {{/if}}
 </div>
     <div class="text-center">
         <div class="jumbotron welcome">
             <div>
                 <h1>Welcome!</h1>
-                Please select a game down below         
+                What would you like to do today?      
             </div>
-        </div>  
+        </div>
+         {{#if user}}
+         <a class="btn btn-warning" href="/user/profile">Profile</a>
+         {{/if}}
+         <a class="btn fbknopje" href="/game">View games</a>  
 
     </div>
 </div>

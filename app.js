@@ -18,6 +18,7 @@ require('mongoose').connect(configDb.url);
 var pokeapi = require('./routes/pokeapi');
 var index = require('./routes/index');
 var type = require('./routes/type');
+var game = require('./routes/game');
 
 var app = express();
 app.disable('x-powered-by');
@@ -45,6 +46,7 @@ require('./routes/user.js')(app, passport);
 app.use('/', index);
 app.use('/matchup', type);
 app.use('/pokeapi', pokeapi);
+app.use('/game', game);
 
 // catch 404 and forward to error handler en fuck deze standaard shit het werkt voor geen meter.
 app.use(function(req, res, next) {

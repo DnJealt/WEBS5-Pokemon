@@ -9,12 +9,11 @@ module.exports = function(app, passport) {
 // =====================================
     // Testing if redirects work this way
     app.get('/user/auth/fb', function(req, res){
-         res.redirect('/user', 301);
+         res.redirect('/user', 302);
     });
     app.get('/user/auth/google', function(req, res){
-         res.redirect('/user', 301);
+         res.redirect('/user', 302);
     });
-
 
     app.get('/user', function(req, res){
         res.render('users', { title: "Pokemon!" });
@@ -66,7 +65,7 @@ module.exports = function(app, passport) {
     // =====================================
     // LOGOUT ==============================
     // =====================================
-    app.get('/logout', function(req, res) {
+    app.get('/user/logout', function(req, res) {
         req.logout();
         res.redirect('/user');
     });
