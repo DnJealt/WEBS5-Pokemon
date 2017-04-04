@@ -5,16 +5,8 @@ var User = require('../models/users');
 module.exports = function(app, passport) {
 
 // =====================================
-// HOME PAGE (with login links) ========
+// USER PAGE ===========================
 // =====================================
-    // Testing if redirects work this way
-    app.get('/user/auth/fb', function(req, res){
-         res.redirect('/user', 302);
-    });
-    app.get('/user/auth/google', function(req, res){
-         res.redirect('/user', 302);
-    });
-
     app.get('/user', function(req, res){
         res.render('users', { title: "Pokemon!" });
     });
@@ -53,7 +45,32 @@ module.exports = function(app, passport) {
         failureFlash : true // allow flash messages
      }));
 
-        // =====================================
+    // =====================================
+    // GOOGLE ==============================
+    // =====================================
+      app.get('/user/auth/google', passport.authenticate('google', { scope : ['profile', 'email'] }));
+
+       app.get('/user/auth/google/callback',
+            passport.authenticate('google', {
+                    successRedirect : '/user/profile',
+                    failureRedirect : '/user/'
+            }));
+
+    // =====================================
+    // FACEBOOK ============================
+    // =====================================
+    // route for facebook authentication and login
+    app.get('/user/auth/fb', passport.authenticate('facebook', { scope : 'email' }));
+
+    // handle the callback after facebook has authenticated the user
+    app.get('/user/auth/fb/callback',
+        passport.authenticate('facebook', {
+            successRedirect : '/user/profile',
+            failureRedirect : '/user'
+        }));
+
+
+    // =====================================
     // PROFILE SECTION =====================
     // =====================================
     // we will want this protected so you have to be logged in to visit

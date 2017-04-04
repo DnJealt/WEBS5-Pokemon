@@ -36,3 +36,8 @@ a {
   border-radius: 10px;
   border-color: black;
 }
+
+table, th, td {
+    text-align: center;
+    border: 1px solid black;
+}

@@ -11,7 +11,14 @@ router.get('/', function(req, res, next){
     }   
 });
 
-
+// No other method is allowed to reach the homepage
+router.all('/', function(req, res, next){
+    var err = new Error('Method not allowed');
+    err.status = 405;
+    err.extramessage = "Dafuq u doing bro?";
+    res.error = err;
+    next();
+});
 
 
 module.exports = router;

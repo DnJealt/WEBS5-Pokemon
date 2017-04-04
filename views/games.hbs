@@ -1,16 +1,59 @@
-<div class="col-md-3 col-md-offset-8 creategame">
+ <!-- show any messages that come back with saving a game -->
+    {{#if message}}
     <div class="row">
-        <h3>Create Game:</h3>
+    
+            <div class="alert alert-danger text-center">{{{message}}}</div>
     </div>
-    <div class="row">
-        <form action="/game/" method="post">
-        <div class="form-group">
-            <label>Game Name</label>
-            <input type="text" placeholder="Game name here.." class="form-control" name="name" required="required">
+    {{/if}}
+<div class="row">
+
+    <div class="col-md-7">
+        {{#if games}}
+        <table class="table">
+            <tr>
+                <th>Name</th>
+                <th>Creator</th>
+                <th>Started</th>
+                <th>Created On</th>
+                <th><span style="color:white;">Action</span>
+            </tr>
+            {{#each games}}
+            <tr>
+                <td>{{Name}}</td>
+                {{#if _creator.local.email}}
+                <td>{{_creator.local.email}}</td>
+                {{else if _creator.google.email}}
+                <td>{{_creator.google.email}}</td>
+                {{else}}
+                <td>{{_creator.facebook.email}}</td>
+                {{/if}}
+                <td>{{HasStarted}}</td>
+                <td>{{Created}}</td>
+                <td>        </td>
+            </tr>
+            {{/each}}
+        {{/if}}
+            
+
+
+
+        </table>
+    </div>
+
+    <div class="col-md-3 col-md-offset-8 creategame">
+        <div class="row">
+            <h3>Create Game:</h3>
+        </div>
+        <div class="row">
+            <form action="/game/" method="post">
+            <div class="form-group">
+                <label>Game Name</label>
+                <input type="text" placeholder="Game name here.." class="form-control" name="name" required="required">
+            </div>
+
+            <button type="submit" class="btn btn-warning btn-lg">Create!</button>
+        </form>
         </div>
 
-        <button type="submit" class="btn btn-warning btn-lg">Create!</button>
-    </form>
     </div>
-
 </div>

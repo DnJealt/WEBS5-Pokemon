@@ -4,13 +4,16 @@ var router = express.Router();
 var mongoose = require('mongoose');
 var Game = require('../models/games');
 
-router.get('/', /*isLoggedIn,*/ function(req, res, next){
-
-    res.render('games', { title: 'Games', user: req.user });
+router.get('/', isLoggedIn, function(req, res, next){
+    
+    var query = Game.find({});
+    query.then(data => {
+        res.render('games', { title: 'Games', user: req.user, games: data });
+    });
+    
 });
 
 router.post('/', isLoggedIn, function(req, res, next){
-    console.log(req.body.name)
     if(!req.body.name){
         var err = new Error('Do you even request bro?');
         err.status = 400;
@@ -19,16 +22,28 @@ router.post('/', isLoggedIn, function(req, res, next){
         next();
     }
     else{
-        console.log(req.user);
-        var newGame = new Game();
-        newGame.HasStarted = false;
-        newGame.Name = req.body.name;
-        newGame._creator = req.user;
-
-
-        res.send(req.user)
+        saveGame(req, res)        
     }
 });
+
+function saveGame(req, res){
+    var newGame = new Game();   
+    newGame.HasStarted = false;
+    newGame.Name = req.body.name;
+    newGame._creator = req.user;
+    newGame.Created = new Date();
+                
+    newGame.save(function(error){
+        if(error){
+            res.status(400);
+            res.render('games', { title: 'Games', user: req.user, message: "Name is already taken!"});
+        }
+        else{
+            // We're saved!
+            res.redirect('/game');
+        }
+    });
+}
 
 
 // route middleware to make sure a user is logged in

@@ -2,10 +2,10 @@
 var mongoose = require('mongoose');
 
 var gameSchema = new mongoose.Schema({
-     Name: String,
-     _creator: { type: mongoose.Schema.Types.ObjectId, ref: 'User'},
+     Name: {type: String, unique: true},
+     _creator: { type: mongoose.Schema.Types.Mixed },
      creatorPokemon: [String],
-     _challenger: { type: mongoose.Schema.Types.ObjectId, ref: 'User'},
+     _challenger: { type: mongoose.Schema.Types.Mixed },
      challengerPokemon: [String],
      Created: Date,
      HasStarted: Boolean
