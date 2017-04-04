@@ -15,7 +15,7 @@ var flash    = require('connect-flash');
 var configDb = require('./config/database');
 require('mongoose').connect(configDb.url);
 
-var types = require('./routes/types');
+// var types = require('./routes/types');
 var pokeapi = require('./routes/pokeapi');
 var index = require('./routes/index');
 var type = require('./routes/type');
@@ -46,8 +46,8 @@ app.use('/', index);
 require('./routes/user.js')(app, passport);
 app.use('/matchup', type);
 
-require('./routes/index.js')(app, passport);
-app.use('/matchup', types);
+// require('./routes/index.js')(app, passport);
+// app.use('/matchup', types);
 app.use('/pokeapi', pokeapi);
 
 // catch 404 and forward to error handler en fuck deze standaard shit het werkt voor geen meter.

@@ -1,49 +1,59 @@
 var express = require('express');
 var router = express.Router();
+var request = require('request');
+var JefNode = require('json-easy-filter').JefNode;
 
-var https = require('https');
+router.get('/pokemon/:pokemon', function(req, res, next) {
+    var pokemon = req.params.pokemon;
+    var pkmnType = {}
+    console.log('hallo: ' + req.params.pokemon);
 
+    request('https://pokeapi.co/api/v2/pokemon/' + pokemon +'/', function(error, response, body) {
+        // console.log('statusCode: ', response && response.statusCode);
+        body = JSON.parse(body);
+        body = body.types;
 
+        pkmnType.slot1 = body[0].type.name;
 
-router.get('/:type', function(req, res, next){
-    var type = req.params.type;
-    //res.send(type);
+        if (body.length == 2){
+            pkmnType.slot2 = body[1].type.name;
+        }
 
-    var pokeapiget = {
-        host: 'pokeapi.co',
-        port: 443,
-        path: '/api/v2/type/' + type + '/',
-        method : 'GET'
-    };
+        res.send(pkmnType);
 
-    console.info('Options prepared:');
-    console.info(pokeapiget);
-    console.info('Do the GET call');
-
-    var reqGet = https.request(pokeapiget, function(res) {
-        console.log("statusCode: ", res.statusCode);
-        console.log("headers: ", res.headers);
-        
-        res.on('data', function(d){
-            console.info('GET result: \n');
-            process.stdout.write(d);
-            console.info('\n\nCall completed');
-        });
     });
+    
+});
 
-    reqGet.end();
-    reqGet.on('error', function(e) {
-        console.error(e);
+router.get('/allpokemon', function(req, res, next) {
+    var allpkmn = [];
+    var pkmnentries = [];
+    var pkmnname = [];
+    // console.log('hello');
+    
+    request('https://pokeapi.co/api/v2/pokedex/1', function(error, response, body){
+        console.log('statusCode: ', response && response.statusCode);
+        body = JSON.parse(body);
+        body = body.pokemon_entries;
+        // res.send(body[0].pokemon_species);
+
+        for(var i = 0; i < body.length; i++)
+        {
+            allpkmn.push({entry_number : body[i].entry_number, name : body[i].pokemon_species.name});
+        }
+        res.send(allpkmn);
     });
 });
 
+router.get('/types/:type', function(req, res, next){
+    var type = req.params.type;
 
+    request('https://pokeapi.co/api/v2/type/' + type, function(error, response, body) {
+        // console.log('statusCode: ', response && response.statusCode);
+        body = JSON.parse(body);
+        res.send(body.damage_relations);
 
-
-
-
-
-
-
+    });
+});
 
 module.exports = router;
