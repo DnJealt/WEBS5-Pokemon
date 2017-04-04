@@ -15,7 +15,6 @@ var flash    = require('connect-flash');
 var configDb = require('./config/database');
 require('mongoose').connect(configDb.url);
 
-// var types = require('./routes/types');
 var pokeapi = require('./routes/pokeapi');
 var index = require('./routes/index');
 var type = require('./routes/type');
@@ -42,12 +41,9 @@ require('./config/passport')(passport);
 app.use(passport.session()); // persistent login sessions
 app.use(flash()); // use connect-flash for flash messages stored in session
 
-app.use('/', index);
 require('./routes/user.js')(app, passport);
+app.use('/', index);
 app.use('/matchup', type);
-
-// require('./routes/index.js')(app, passport);
-// app.use('/matchup', types);
 app.use('/pokeapi', pokeapi);
 
 // catch 404 and forward to error handler en fuck deze standaard shit het werkt voor geen meter.

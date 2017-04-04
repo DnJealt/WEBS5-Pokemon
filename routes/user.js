@@ -44,7 +44,7 @@ module.exports = function(app, passport) {
     // show the signup form
     app.get('/user/signup', function(req, res) {
         // render the page and pass in any flash data if it exists
-        res.render('/user/signup', { message: req.flash('signupMessage'), title: "Local signup" });
+        res.render('signup', { message: req.flash('signupMessage'), title: "Local signup" });
     });
 
     // process the signup form
