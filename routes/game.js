@@ -45,8 +45,8 @@ router.post('/delete/:id', isAdmin, function(req, res, next){
     
 });
 
-router.post('/put/:id', isLoggedIn, function(req, res, next){
-    var id = req.params.id;
+router.post('/put/58e3e9e71bdc31272c4001ad', isLoggedIn, function(req, res, next){
+    var id = '58e3e9e71bdc31272c4001ad';//req.params.id;
     console.log('Voor findbyid: ' + id);
     if(id){
         // Game._challenger = req.user;
