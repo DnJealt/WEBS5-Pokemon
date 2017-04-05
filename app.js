@@ -10,10 +10,6 @@ var passport = require('passport');
 
 var flash    = require('connect-flash');
 
-
-    
-
-
 // Connect to the database
 var configDb = require('./config/database');
 require('mongoose').connect(configDb.url);

@@ -113,9 +113,28 @@
                 <input type="text" placeholder="Game name here.." class="form-control" name="name" required="required">
             </div>
 
-            <button type="submit" class="btn btn-warning btn-lg">Create!</button>
+            <button type="submit" class="btn btn-warning btn-lg" >Create!</button>
+            <script src="https://code.jquery.com/jquery-1.10.2.js"></script>
+            <script src="/socket.io/socket.io.js"></script>
+            <script>
+                $(document).ready(function(){
+                    var socket = io();
+                    io.emit('refresh feed',status);
+                });
+            </script>
         </form>
         </div>
 
     </div>
 </div>
+
+<script src="https://code.jquery.com/jquery-1.10.2.js"></script>
+<script src="/socket.io/socket.io.js"></script>
+<script>
+    $(document).ready(function(){
+          var socket = io();
+          socket.on('refresh feed',function(msg){
+            $("#show_comments").append(msg + '<br /><br />');
+          });
+    });
+</script>
