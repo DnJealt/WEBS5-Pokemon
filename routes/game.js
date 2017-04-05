@@ -45,8 +45,8 @@ router.post('/delete/:id', isAdmin, function(req, res, next){
     
 });
 
-router.post('/put/58e3e9e71bdc31272c4001ad', isLoggedIn, function(req, res, next){
-    var id = '58e3e9e71bdc31272c4001ad';//req.params.id;
+router.post('/join', isLoggedIn, function(req, res, next){
+    var id = req.body.id;
     console.log('Voor findbyid: ' + id);
     if(id){
         // Game._challenger = req.user;
@@ -56,6 +56,7 @@ router.post('/put/58e3e9e71bdc31272c4001ad', isLoggedIn, function(req, res, next
             if (err) return handleError(err);
             res.send(gameupdate);
             console.log('in findbyid: ' + id);
+            res.redirect('/game');
         });
         
     };

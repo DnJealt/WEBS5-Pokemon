@@ -37,7 +37,8 @@
                 <td>{{_challenger.facebook.email}}</td>
                 {{else}}
                 <td>
-                    <form action="/game/put/58e3e9e71bdc31272c4001ad" method="post">
+                    <form action="/game/join" method="post">
+                    <input type="hidden" value="{{_id}}" name="id"/>
                         <button type="submit" class="btn btn-danger">Join</buton>
                     </form>
                 </td>
