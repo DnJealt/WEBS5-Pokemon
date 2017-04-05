@@ -27,8 +27,8 @@ router.post('/', isLoggedIn, function(req, res, next){
 });
 
 
-router.post('/delete/:id', isAdmin, function(req, res, next){
-    var id = req.params.id;
+router.post('/delete', isAdmin, function(req, res, next){
+    var id = req.body.id;
     if(id){
         Game.findByIdAndRemove(id, function(error, document){
             if(error){

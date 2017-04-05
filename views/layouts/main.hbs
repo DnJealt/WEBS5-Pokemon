@@ -24,6 +24,9 @@
             {{else}}
                 Logged in as: {{user.facebook.name}}
             {{/if}}
+            {{#ifCond user.role '==' 'admin'}}
+            [ADMIN]
+            {{/ifCond}}            
         </span>
         {{/if}}
     </div>

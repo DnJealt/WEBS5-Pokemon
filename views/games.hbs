@@ -1,5 +1,5 @@
- <!-- show any messages that come back with saving a game -->
     {{#if message}}
+    <!-- show any messages that come back with saving a game -->
     <div class="row">
     
             <div class="alert alert-danger text-center">{{{message}}}</div>
@@ -8,7 +8,53 @@
 <div class="row">
 
     <div class="col-md-7 pull-left">
-        {{#if games}}
+        {{#if games}}       
+        {{#ifCond user.role '==' 'admin'}}
+        <table class="table">
+            <tr>
+                <th>Name</th>
+                <th>Creator</th>
+                <th>Started</th>
+                <th>Created On</th>
+                <th>Challenger</th>
+                <th>Delete Game</th>
+            </tr>
+            {{#each games}}
+            <tr>
+                <td>{{Name}}</td>
+                {{#if _creator.local.email}}
+                <td>{{_creator.local.email}}</td>
+                {{else if _creator.google.email}}
+                <td>{{_creator.google.email}}</td>
+                {{else}}
+                <td>{{_creator.facebook.email}}</td>
+                {{/if}}
+                <td>{{HasStarted}}</td>
+                <td>{{Created}}</td>
+                {{#if _challenger.local.email}}
+                <td>{{_challenger.local.email}}</td>
+                {{else if _challenger.google.email}}
+                <td>{{_challenger.google.email}}</td>
+                {{else if _challenger.facebook.email}}
+                <td>{{_challenger.facebook.email}}</td>
+                {{else}}
+                <td>
+                    <form action="/game/join" method="post">
+                    <input type="hidden" value="{{_id}}" name="id"/>
+                        <button type="submit" class="btn btn-success">Join</buton>
+                    </form>
+                </td>
+                {{/if}}
+                <td>
+                    <form action="/game/delete" onsubmit="return confirm('Are you sure to delete this game?');" method="post">
+                    <input type="hidden" value="{{_id}}" name="id"/>
+                        <button type="submit" class="btn btn-danger"><span class="glyphicon glyphicon-remove"></span></button>
+                    </form>
+                </td>
+                
+            </tr>
+            {{/each}}
+        {{else}}
         <table class="table">
             <tr>
                 <th>Name</th>
@@ -39,19 +85,21 @@
                 <td>
                     <form action="/game/join" method="post">
                     <input type="hidden" value="{{_id}}" name="id"/>
-                        <button type="submit" class="btn btn-danger">Join</buton>
+                        <button type="submit" class="btn btn-success">Join</buton>
                     </form>
                 </td>
                 {{/if}}
+                
             </tr>
             {{/each}}
-        {{/if}}
-            
+        {{/ifCond}}
+        {{/if}}  
 
 
 
         </table>
     </div>
+
 
 
     <div class="col-md-3 col-md-offset-8 creategame">

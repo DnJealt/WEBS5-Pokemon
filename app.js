@@ -4,11 +4,14 @@ var path = require('path');
 var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
-var exphbs = require('express-handlebars');
 var session = require('express-session');
+var exphbs = require('./models/hbsHelper');
 var passport = require('passport');
 
 var flash    = require('connect-flash');
+
+
+    
 
 
 // Connect to the database
@@ -24,7 +27,7 @@ var app = express();
 app.disable('x-powered-by');
 
 // view engine setup
-app.engine('hbs', exphbs({extname: 'hbs', defaultLayout: 'main'}));
+app.engine('hbs', exphbs.engine);
 app.set('view engine', 'hbs');
 
 // uncomment after placing your favicon in /public
@@ -41,6 +44,7 @@ app.use(passport.initialize());
 require('./config/passport')(passport);
 app.use(passport.session()); // persistent login sessions
 app.use(flash()); // use connect-flash for flash messages stored in session
+
 
 require('./routes/user.js')(app, passport);
 app.use('/', index);
