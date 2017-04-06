@@ -1,3 +1,16 @@
+/**
+ * @swagger
+ * /index:
+ *   get:
+ *     tags:
+ *        - index
+ *     description: Get the homepage
+ *     produces:
+ *       - application/json
+ *     responses:
+ *       200:
+ *         description: homepage returned
+*/
 var express = require('express');
 var router = express.Router();
 

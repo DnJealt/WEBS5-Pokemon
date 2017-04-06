@@ -1,15 +1,14 @@
-    {{#if message}}
-    <!-- show any messages that come back with saving a game -->
-    <div class="row">
-    
-            <div class="alert alert-danger text-center">{{{message}}}</div>
-    </div>
-    {{/if}}
+ {{#if message}}
+<!-- show any messages that come back with saving a game -->
+<div class="row">
+
+    <div class="alert alert-danger text-center">{{{message}}}</div>
+</div>
+{{/if}}
 <div class="row">
 
     <div class="col-md-7 pull-left">
-        {{#if games}}       
-        {{#ifCond user.role '==' 'admin'}}
+        {{#if games}} {{#ifCond user.role '==' 'admin'}}
         <table class="table">
             <tr>
                 <th>Name</th>
@@ -40,7 +39,7 @@
                 {{else}}
                 <td>
                     <form action="/game/join" method="post">
-                    <input type="hidden" value="{{_id}}" name="id"/>
+                        <input type="hidden" value="{{_id}}" name="id" />
                         <button type="submit" class="btn btn-success">Join</buton>
                     </form>
                 </td>
@@ -51,41 +50,44 @@
                         <button type="submit" class="btn btn-danger"><span class="glyphicon glyphicon-remove"></span></button>
                     </form>
                 </td>
-                
+
             </tr>
-            {{/each}}
-        {{else}}
-        <table class="table">
-            <tr>
-                <th>Name</th>
-                <th>Creator</th>
-                <th>Started</th>
-                <th>Created On</th>
-                <th>Challenger</th>
-            </tr>
-            {{#each games}}
-            <tr>
-                <td>{{Name}}</td>
-                {{#if _creator.local.email}}
-                <td>{{_creator.local.email}}</td>
-                {{else if _creator.google.email}}
-                <td>{{_creator.google.email}}</td>
-                {{else}}
-                <td>{{_creator.facebook.email}}</td>
-                {{/if}}
-                <td>{{HasStarted}}</td>
-                <td>{{Created}}</td>
-                {{#if _challenger.local.email}}
-                <td>{{_challenger.local.email}}</td>
-                {{else if _challenger.google.email}}
-                <td>{{_challenger.google.email}}</td>
-                {{else if _challenger.facebook.email}}
-                <td>{{_challenger.facebook.email}}</td>
-                {{else}}
-                <td>
-                    <form action="/game/join" method="post">
-                    <input type="hidden" value="{{_id}}" name="id"/>
-                        <button type="submit" class="btn btn-success">Join</buton>
+            {{/each}} {{else}}
+            <table class="table">
+                <tr>
+                    <th>Name</th>
+                    <th>Creator</th>
+                    <th>Started</th>
+                    <th>Created On</th>
+                    <th>Challenger</th>
+                </tr>
+                {{#each games}}
+                <tr>
+                    <td>{{Name}}</td>
+                    {{#if _creator.local.email}}
+                    <td>{{_creator.local.email}}</td>
+                    {{else if _creator.google.email}}
+                    <td>{{_creator.google.email}}</td>
+                    {{else}}
+                    <td>{{_creator.facebook.email}}</td>
+                    {{/if}}
+                    <td>{{HasStarted}}</td>
+                    <td>{{Created}}</td>
+                    {{#if _challenger.local.email}}
+                    <td>{{_challenger.local.email}}</td>
+                    {{else if _challenger.google.email}}
+                    <td>{{_challenger.google.email}}</td>
+                    {{else if _challenger.facebook.email}}
+                    <td>{{_challenger.facebook.email}}</td>
+                    {{else}}
+                    <td>
+                        <form action="/game/join" method="post">
+                            <input type="hidden" value="{{_id}}" name="id" />
+                            <button type="submit" id='join' class="btn btn-success" >Join</buton>
+                            
+                            
+                        
+                        
                     </form>
                 </td>
                 {{/if}}
@@ -114,27 +116,35 @@
             </div>
 
             <button type="submit" class="btn btn-warning btn-lg" >Create!</button>
-            <script src="https://code.jquery.com/jquery-1.10.2.js"></script>
-            <script src="/socket.io/socket.io.js"></script>
-            <script>
-                $(document).ready(function(){
-                    var socket = io();
-                    io.emit('refresh feed',status);
-                });
-            </script>
-        </form>
-        </div>
 
+                        </form>
     </div>
+
+</div>
 </div>
 
 <script src="https://code.jquery.com/jquery-1.10.2.js"></script>
 <script src="/socket.io/socket.io.js"></script>
 <script>
-    $(document).ready(function(){
-          var socket = io();
-          socket.on('refresh feed',function(msg){
-            $("#show_comments").append(msg + '<br /><br />');
-          });
-    });
+                                                                                   //$(document).ready(function () {
+                                                                                       var socket = io();
+                                                                                       socket.on('hoi', function(data){
+                                                                                            console.log(data);
+                                                                                       })
+
+                                                                                       socket.on('refresh feed', function (msg) {
+                                                                                           $("#show_comments").append(msg + '<br /><br />');
+                                                                                       });
+
+                                                                                       function refresh() {
+                                                                                           io.emit('refresh all', status);
+                                                                                       };
+
+                                                                                       $('#join').click(function(){
+                                                                                           console.log('Ge emit');
+                                                                                           io.emit('refresh all', status);
+                                                                                           
+                                                                                       });
+                                                                                  //});
+
 </script>

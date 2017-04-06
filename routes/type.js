@@ -1,3 +1,72 @@
+/**
+ * @swagger
+ * /type:
+ *   get:
+ *     tags:
+ *        - type
+ *     description: Show error "Please use /attack or /defend"
+ *     produces:
+ *       - application/json
+ *     responses:
+ *       200:
+ *         description: Show error "Please use /attack or /defend"
+ * 
+ * /type/attack:
+ *   get:
+ *     tags:
+ *        - type
+ *     description: Jelte?
+ *     produces:
+ *       - application/json
+ *     responses:
+ *       200:
+ *         description: Jelte?
+ * 
+ * /type/attack/:type:
+ *   get:
+ *     tags:
+ *        - type
+ *     description: Get the types that get (no/weak/strong) damage from the specific type
+ *     produces:
+ *       - application/json
+ *     parameters:
+ *       - name: type
+ *         in: path
+ *         description: String that defines the type
+ *         required: true
+ *         type: string 
+ *     responses:
+ *       200:
+ *         description: types returned in a array for get no/weak/strong damage
+ * 
+ * /type/defend:
+ *   get:
+ *     tags:
+ *        - type
+ *     description: Jelte?
+ *     produces:
+ *       - application/json
+ *     responses:
+ *       200:
+ *         description: Jelte?
+ * 
+ * /type/defend/:type:
+ *   get:
+ *     tags:
+ *        - type
+ *     description: Get the types that do (no/weak/strong) damage to the specific type
+ *     produces:
+ *       - application/json
+ *     parameters:
+ *       - name: type
+ *         in: path
+ *         description: String that defines the type
+ *         required: true
+ *         type: string 
+ *     responses:
+ *       200:
+ *         description: types returned in a array for do no/weak/strong damage
+*/
 var express = require('express');
 var router = express.Router();
 var offending = require('../models/offendingMatchups');

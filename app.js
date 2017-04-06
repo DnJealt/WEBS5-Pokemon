@@ -7,6 +7,7 @@ var bodyParser = require('body-parser');
 var session = require('express-session');
 var exphbs = require('./models/hbsHelper');
 var passport = require('passport');
+var swaggerJSDoc = require('swagger-jsdoc');
 
 var flash    = require('connect-flash');
 
@@ -20,6 +21,36 @@ var type = require('./routes/type');
 var game = require('./routes/game');
 
 var app = express();
+
+//swagger definition
+var swaggerDefinition = {
+  info: {
+    title: 'Webs5-Pokemon',
+    version: '1.0.0',
+    description: 'Battle pokemon',
+  },
+  host: 'localhost:3000',
+  basePath: '/',
+};
+
+// options for the swagger docs
+var options = {
+  // import swaggerDefinitions
+  swaggerDefinition: swaggerDefinition,
+  // path to the API docs
+  apis: ['./routes/*.js','./models/*.js'],
+};
+
+// initialize swagger-jsdoc
+var swaggerSpec = swaggerJSDoc(options);
+
+
+
+
+
+
+
+
 app.disable('x-powered-by');
 
 // view engine setup
@@ -47,6 +78,12 @@ app.use('/', index);
 app.use('/matchup', type);
 app.use('/pokeapi', pokeapi);
 app.use('/game', game);
+
+// serve swagger
+app.get('/swagger.json', function(req, res) {
+  res.setHeader('Content-Type', 'application/json');
+  res.send(swaggerSpec);
+});
 
 // catch 404 and forward to error handler en fuck deze standaard shit het werkt voor geen meter.
 app.use(function(req, res, next) {

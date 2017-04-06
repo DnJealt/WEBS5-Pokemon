@@ -89,13 +89,15 @@ function onListening() {
   debug('Listening on ' + bind);
 }
 
-// 
+
 var http = require('http').Server(app);
 var io = require('socket.io').listen(thing);
 
 io.on('connection', function(socket){
     console.log('A user is connected');
-    socket.on('status added', function(status){
+    io.emit('hoi', 'hoi');
+    socket.on('refresh all', function(status){
+      consol.log('Zit in ik in refresh all?')
       if(res){
         io.emit('refresh feed',status);
       }

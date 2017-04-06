@@ -1,8 +1,82 @@
+/**
+ * @swagger
+ * /game:
+ *   get:
+ *     tags:
+ *       - games
+ *     description: Get all games
+ *     produces:
+ *       - application/json
+ *     parameters:
+ *       - name: isLoggedIn
+ *         description: Checking if a user is logged in
+ *         in: body
+ *         required: true
+ *         type: boolean
+ *     responses:
+ *       200:
+ *         description: games returned
+ * 
+ *   post:
+ *     tags:
+ *       - games
+ *     description: Creates a game
+ *     produces:
+ *       - application/json
+ *     parameters:
+ *       - name: isLoggedIn
+ *         description: Checking if a user is logged in
+ *         in: body
+ *         required: true
+ *         type: boolean
+ *     responses:
+ *       201:
+ *         description: game created
+ *       500:
+ *         description: Internal server error game not created
+ * 
+ * /game/delete:
+ *     tags:
+ *       - games
+ *     description: Deletes a game
+ *     produces:
+ *       - application/json
+ *     parameters:
+ *       - name: isAdmin
+ *         description: Checking if the user is an admin
+ *         in: body
+ *         required: true
+ *         type: boolean
+ *     responses:
+ *       200:
+ *         description: game deleted
+ *       500:
+ *         description: Internal server error game not deleted
+ * 
+ * /game/join:
+ *     tags:
+ *       - games
+ *     description: user can join a game
+ *     produces:
+ *       - application/json
+ *     parameters:
+ *       - name: isLoggedIn
+ *         description: Checking if a user is logged in
+ *         in: body
+ *         required: true
+ *         type: boolean
+ *     responses:
+ *       200:
+ *         description: game joined
+ *       500:
+ *         description: Internal server error game is not joined
+ */
 var express = require('express');
 var router = express.Router();
 
 var mongoose = require('mongoose');
 var Game = require('../models/games');
+var io = require('socket.io');
 
 router.get('/', isLoggedIn, function(req, res, next){
     
@@ -57,6 +131,9 @@ router.post('/join', isLoggedIn, function(req, res, next){
             res.send(gameupdate);
             console.log('in findbyid: ' + id);
             res.redirect('/game');
+            // <script src="/socket.io/socket.io.js"></script>
+            // var socket = io.connect('http://localhost');
+                // io.emit('refresh');
         });
         
     };
