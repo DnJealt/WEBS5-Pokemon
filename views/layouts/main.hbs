@@ -15,16 +15,16 @@
 <body>
     <div class="row header pull-left"><a class="btn btn-info" style="margin-left: 20px;" href="/">Home</a></div>
     <div class="header pull-right">
-        {{#if user}}
+        {{#if data.user}}
         <span style="margin-right: 20px;">
-            {{#if user.local.email}}
-                Logged in as: {{user.local.email}}
-            {{else if user.google.name}}
-                Logged in as: {{user.google.name}}
+            {{#if data.user.local.email}}
+                Logged in as: {{data.user.local.email}}
+            {{else if data.user.google.name}}
+                Logged in as: {{data.user.google.name}}
             {{else}}
-                Logged in as: {{user.facebook.name}}
+                Logged in as: {{data.user.facebook.name}}
             {{/if}}
-            {{#ifCond user.role '==' 'admin'}}
+            {{#ifCond data.user.role '==' 'admin'}}
             [ADMIN]
             {{/ifCond}}            
         </span>

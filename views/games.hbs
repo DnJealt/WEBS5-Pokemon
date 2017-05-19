@@ -8,7 +8,7 @@
 <div class="row">
 
     <div class="col-md-7 pull-left">
-        {{#if games}} {{#ifCond user.role '==' 'admin'}}
+        {{#if data.content}} {{#ifCond data.user.role '==' 'admin'}}
         <table class="table">
             <tr>
                 <th>Name</th>
@@ -18,7 +18,7 @@
                 <th>Challenger</th>
                 <th>Delete Game</th>
             </tr>
-            {{#each games}}
+            {{#each data.content}}
             <tr>
                 <td>{{Name}}</td>
                 {{#if _creator.local.email}}
@@ -61,7 +61,7 @@
                     <th>Created On</th>
                     <th>Challenger</th>
                 </tr>
-                {{#each games}}
+                {{#each data.content}}
                 <tr>
                     <td>{{Name}}</td>
                     {{#if _creator.local.email}}

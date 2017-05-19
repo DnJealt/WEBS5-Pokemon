@@ -77,12 +77,16 @@ var router = express.Router();
 var mongoose = require('mongoose');
 var Game = require('../models/games');
 var io = require('socket.io');
+var send = require('../models/headerAccept');
 
 router.get('/', isLoggedIn, function(req, res, next){
     
     var query = Game.find({});
     query.then(data => {
-        res.render('games', { title: 'Games', user: req.user, games: data, challenger: req.challenger });
+        req.page = 'games';
+        req.pagetitle = 'Games';
+        req.data = data;
+        send.response(req, res);
     });
     
 });
