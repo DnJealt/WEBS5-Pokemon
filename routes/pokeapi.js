@@ -50,22 +50,31 @@ var router = express.Router();
 var request = require('request');
 
 router.get('/pokemon/:pokemon', function(req, res, next) {
-    var pokemon = req.params.pokemon;
-    var pkmnType = {}
+    var pkmn = req.params.pokemon;
+    var pokemon = {}
     // console.log('hallo: ' + req.params.pokemon);
 
-    request('https://pokeapi.co/api/v2/pokemon/' + pokemon +'/', function(error, response, body) {
+    request('https://pokeapi.co/api/v2/pokemon/' + pkmn +'/', function(error, response, body) {
         // console.log('statusCode: ', response && response.statusCode);
-        body = JSON.parse(body);
-        body = body.types;
+        
+        if(response.statusCode > 199 && response.statusCode < 300)
+        {
+            body = JSON.parse(body);
+            pokemon.name = body.name;
+            body = body.types;
 
-        pkmnType.slot1 = body[0].type.name;
+            pokemon.slot1 = body[0].type.name;
 
-        if (body.length == 2){
-            pkmnType.slot2 = body[1].type.name;
+            if (body.length == 2){
+                pokemon.slot2 = body[1].type.name;
+            }
+
+            res.send(pokemon);
         }
-
-        res.send(pkmnType);
+        else
+        {
+            res.send({error: pkmn + " not found"});
+        }
 
     });
     

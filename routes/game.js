@@ -129,6 +129,7 @@ router.post('/join', isLoggedIn, function(req, res, next){
     if(id){
         // Game._challenger = req.user;
         // Game.find({id}).update
+        Math.floor((Math.random() * 721) + 1 );
         
         Game.findByIdAndUpdate(id, { $set: { _challenger: req.user}}, { new: true}, function(err, gameupdate) {
             if (err) return handleError(err);

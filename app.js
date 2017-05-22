@@ -76,7 +76,7 @@ app.use(flash()); // use connect-flash for flash messages stored in session
 require('./routes/user.js')(app, passport);
 app.use('/', index);
 app.use('/matchup', type);
-app.use('/pokeapi', pokeapi);
+app.use('/pokemon', pokeapi);
 app.use('/game', game);
 
 // serve swagger
