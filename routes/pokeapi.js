@@ -96,7 +96,7 @@ router.get('/types/:type', function(req, res, next){
         // console.log('statusCode: ', response && response.statusCode);
         body = JSON.parse(body);
         res.send(body.damage_relations);
-
+        
     });
 });
 

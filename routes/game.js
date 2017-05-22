@@ -83,6 +83,7 @@ router.get('/', isLoggedIn, function(req, res, next){
     
     var query = Game.find({});
     query.then(data => {
+        // Initiate accept header middleware
         req.page = 'games';
         req.pagetitle = 'Games';
         req.data = data;
@@ -123,8 +124,8 @@ router.post('/delete', isAdmin, function(req, res, next){
     
 });
 
-router.post('/join', isLoggedIn, function(req, res, next){
-    var id = req.body.id;
+router.post('/:id/join', isLoggedIn, function(req, res, next){
+    var id = req.params.id;
     console.log('Voor findbyid: ' + id);
     if(id){
         // Game._challenger = req.user;
@@ -154,7 +155,11 @@ function saveGame(req, res){
     newGame.save(function(error){
         if(error){
             res.status(400);
-            res.render('games', { title: 'Games', user: req.user, message: "Name is already taken!"});
+            req.page = 'games';
+            req.pagetitle = 'Games';
+            req.message = "Name is already taken!";
+            req.data = {error: "name is already taken"};
+            send.response(req, res);
         }
         else{
             // We're saved!

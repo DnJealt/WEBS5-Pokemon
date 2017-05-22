@@ -17,7 +17,7 @@ module.exports = {
 
 				res.setHeader('Content-Type', 'text/html');
 				console.log(req.data);
-				res.render(req.page, { title: req.pagetitle, data: { content: req.data, user: req.user } });	
+				res.render(req.page, { title: req.pagetitle, message: req.message, data: { content: req.data, user: req.user } });	
 
 			break;
 

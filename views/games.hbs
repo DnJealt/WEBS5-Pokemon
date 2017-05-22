@@ -56,7 +56,7 @@
                     </td>
                     {{else}}
                     <td>
-                        <form action="/game/join" method="post">
+                        <form action="/game/{{_id}}/join" method="post">
                             <input type="hidden" value="{{_id}}" name="id" />
                             <button type="submit" id='join' class="btn btn-success" >Join</buton>
                         </form>
