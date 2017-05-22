@@ -111,8 +111,12 @@ app.use(function(err, req, res, next) {
     err.message = "Internal Server Error";
   }
 
-  res.status(statusCode);
-  res.render('error', {title: statusCode, statuscode: statusCode, message: err.message, extramessage: err.extramessage});
+  if(err.message != 'nada'){
+    res.status(statusCode);
+    res.render('error', {title: statusCode, statuscode: statusCode, message: err.message, extramessage: err.extramessage});
+  }
+  console.log('en nu?');
+
 });
 
 module.exports = app;

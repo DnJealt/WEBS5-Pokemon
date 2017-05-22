@@ -103,7 +103,12 @@ router.post('/', isLoggedIn, function(req, res, next){
     }
     else{
         saveGame(req, res, next);
-        next();
+        res.end();
+        // // workaround for error handler
+        // var err = new Error('nada');
+        // err.status = 200;
+        // res.error = err;
+        // next();
     }
 });
 
@@ -169,7 +174,7 @@ function saveGame(req, res, next){
         else{
             // We're saved!
             socket.gameAdded(game);
-            return;
+            // return;
             // res.redirect('/game');
         }
     });
