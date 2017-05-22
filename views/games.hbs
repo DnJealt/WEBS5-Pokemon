@@ -9,70 +9,8 @@
 
     <div class="col-md-7 pull-left">
         {{#if data.content}} {{#ifCond data.user.role '==' 'admin'}}
-        <table class="table">
-            <tr>
-                <th>Name</th>
-                <th>Creator</th>
-                <th>Started</th>
-                <th>Created On</th>
-                <th>Challenger</th>
-                <th>Watch</th>
-                <th>Delete Game</th>
-            </tr>
-            {{#each data.content}}
-            <tr>
-                <td>{{Name}}</td>
-                {{#if _creator.local.email}}
-                <td>{{_creator.local.email}}</td>
-                {{else if _creator.google.email}}
-                <td>{{_creator.google.email}}</td>
-                {{else}}
-                <td>{{_creator.facebook.email}}</td>
-                {{/if}}
-                <td>{{HasStarted}}</td>
-                <td>{{Created}}</td>
-                {{#if _challenger.local.email}}
-                <td>{{_challenger.local.email}}</td><td>
-                        <form action="/game/watch" method="get">
-                            <input type="hidden" value="{{_id}}" name="id">
-                            <button type="button" id='watch' class="btn btn-lg"> Watch game</button>
-                        </form>
-                    </td>
-                    {{else if _challenger.google.email}}
-                    <td>{{_challenger.google.email}}</td>
-                    <td>
-                        <form action="/game/watch" method="get">
-                            <input type="hidden" value="{{_id}}" name="id">
-                            <button type="button" id='watch' class="btn btn-lg"> Watch game</button>
-                        </form>
-                    </td>
-                    {{else if _challenger.facebook.email}}
-                    <td>{{_challenger.facebook.email}}</td>
-                    <td>
-                        <form action="/game/watch" method="get">
-                            <input type="hidden" value="{{_id}}" name="id">
-                            <button type="button" id='watch' class="btn btn-lg"> Watch game</button>
-                        </form>
-                    </td>
-                    {{else}}
-                    <td>
-                        <form action="/game/{{_id}}/join" method="post">
-                            <input type="hidden" value="{{_id}}" name="id" />
-                            <button type="submit" id='join' class="btn btn-success" >Join</buton>
-                        </form>
-                    </td>
-                    <td>No challenger found</td>
-                {{/if}}
-                <td>
-                    <form action="/game/delete" onsubmit="return confirm('Are you sure to delete this game?');" method="post">
-                    <input type="hidden" value="{{_id}}" name="id"/>
-                        <button type="submit" class="btn btn-danger"><span class="glyphicon glyphicon-remove"></span></button>
-                    </form>
-                </td>
-
-            </tr>
-            {{/each}} {{else}}
-            <table class="table">
+        <table class="table" id="games">
+            <tbody>
                 <tr>
                     <th>Name</th>
                     <th>Creator</th>
@@ -80,6 +18,7 @@
                     <th>Created On</th>
                     <th>Challenger</th>
                     <th>Watch</th>
+                    <th>Delete Game</th>
                 </tr>
                 {{#each data.content}}
                 <tr>
@@ -94,45 +33,109 @@
                     <td>{{HasStarted}}</td>
                     <td>{{Created}}</td>
                     {{#if _challenger.local.email}}
-                    <td>{{_challenger.local.email}}</td>
-                    <td>
-                        <form action="/game/watch" method="get">
-                            <input type="hidden" value="{{_id}}" name="id">
-                            <button type="button" id='watch' class="btn btn-lg"> Watch game</button>
-                        </form>
-                    </td>
-                    {{else if _challenger.google.email}}
-                    <td>{{_challenger.google.email}}</td>
-                    <td>
-                        <form action="/game/watch" method="get">
-                            <input type="hidden" value="{{_id}}" name="id">
-                            <button type="button" id='watch' class="btn btn-lg"> Watch game</button>
-                        </form>
-                    </td>
-                    {{else if _challenger.facebook.email}}
-                    <td>{{_challenger.facebook.email}}</td>
-                    <td>
-                        <form action="/game/watch" method="get">
-                            <input type="hidden" value="{{_id}}" name="id">
-                            <button type="button" id='watch' class="btn btn-lg"> Watch game</button>
-                        </form>
-                    </td>
-                    {{else}}
-                    <td>
-                        <form action="/game/join" method="post">
-                            <input type="hidden" value="{{_id}}" name="id" />
-                            <button type="submit" id='join' class="btn btn-success" >Join</buton>
-                        </form>
-                    </td>
-                    <td>No challenger found</td>
+                    <td>{{_challenger.local.email}}</td><td>
+                            <form action="/game/watch" method="get">
+                                <input type="hidden" value="{{_id}}" name="id">
+                                <button type="button" id='watch' class="btn btn-lg"> Watch game</button>
+                            </form>
+                        </td>
+                        {{else if _challenger.google.email}}
+                        <td>{{_challenger.google.email}}</td>
+                        <td>
+                            <form action="/game/watch" method="get">
+                                <input type="hidden" value="{{_id}}" name="id">
+                                <button type="button" id='watch' class="btn btn-lg"> Watch game</button>
+                            </form>
+                        </td>
+                        {{else if _challenger.facebook.email}}
+                        <td>{{_challenger.facebook.email}}</td>
+                        <td>
+                            <form action="/game/watch" method="get">
+                                <input type="hidden" value="{{_id}}" name="id">
+                                <button type="button" id='watch' class="btn btn-lg"> Watch game</button>
+                            </form>
+                        </td>
+                        {{else}}
+                        <td>
+                            <form action="/game/{{_id}}/join" method="post">
+                                <input type="hidden" value="{{_id}}" name="id" />
+                                <button type="submit" id='join' class="btn btn-success" >Join</buton>
+                            </form>
+                        </td>
+                        <td>No challenger found</td>
                     {{/if}}
+                    <td>
+                        <form action="/game/delete" onsubmit="return confirm('Are you sure to delete this game?');" method="post">
+                        <input type="hidden" value="{{_id}}" name="id"/>
+                            <button type="submit" class="btn btn-danger"><span class="glyphicon glyphicon-remove"></span></button>
+                        </form>
+                    </td>
+
                 </tr>
+            
+            {{/each}} {{else}}
+            <table class="table" id="games">
+                 <tbody>
+                    <tr>
+                        <th>Name</th>
+                        <th>Creator</th>
+                        <th>Started</th>
+                        <th>Created On</th>
+                        <th>Challenger</th>
+                        <th>Watch</th>
+                    </tr>
+                    {{#each data.content}}
+                    <tr>
+                        <td>{{Name}}</td>
+                        {{#if _creator.local.email}}
+                        <td>{{_creator.local.email}}</td>
+                        {{else if _creator.google.email}}
+                        <td>{{_creator.google.email}}</td>
+                        {{else}}
+                        <td>{{_creator.facebook.email}}</td>
+                        {{/if}}
+                        <td>{{HasStarted}}</td>
+                        <td>{{Created}}</td>
+                        {{#if _challenger.local.email}}
+                        <td>{{_challenger.local.email}}</td>
+                        <td>
+                            <form action="/game/watch" method="get">
+                                <input type="hidden" value="{{_id}}" name="id">
+                                <button type="button" id='watch' class="btn btn-lg"> Watch game</button>
+                            </form>
+                        </td>
+                        {{else if _challenger.google.email}}
+                        <td>{{_challenger.google.email}}</td>
+                        <td>
+                            <form action="/game/watch" method="get">
+                                <input type="hidden" value="{{_id}}" name="id">
+                                <button type="button" id='watch' class="btn btn-lg"> Watch game</button>
+                            </form>
+                        </td>
+                        {{else if _challenger.facebook.email}}
+                        <td>{{_challenger.facebook.email}}</td>
+                        <td>
+                            <form action="/game/watch" method="get">
+                                <input type="hidden" value="{{_id}}" name="id">
+                                <button type="button" id='watch' class="btn btn-lg"> Watch game</button>
+                            </form>
+                        </td>
+                        {{else}}
+                        <td>
+                            <form action="/game/join" method="post">
+                                <input type="hidden" value="{{_id}}" name="id" />
+                                <button type="submit" id='join' class="btn btn-success" >Join</buton>
+                            </form>
+                        </td>
+                        <td>No challenger found</td>
+                        {{/if}}
+                    </tr>
                 {{/each}}
             {{/ifCond}}
         {{/if}}  
 
 
-
+            </tbody>
         </table>
     </div>
 
@@ -160,25 +163,41 @@
 <script src="https://code.jquery.com/jquery-1.10.2.js"></script>
 <script src="/socket.io/socket.io.js"></script>
 <script>
-                                                                                   //$(document).ready(function () {
-                                                                                       var socket = io();
-                                                                                       socket.on('hoi', function(data){
-                                                                                            console.log(data);
-                                                                                       })
+    //$(document).ready(function () {
+        var socket = io();
+        socket.on('hoi', function(data){
+            alert(data);
+        })
 
-                                                                                       socket.on('refresh feed', function (msg) {
-                                                                                           $("#show_comments").append(msg + '<br /><br />');
-                                                                                       });
+        socket.on('refresh feed', function (msg) {
+            $("#show_comments").append(msg + '<br /><br />');
+        });
 
-                                                                                       function refresh() {
-                                                                                           io.emit('refresh all', status);
-                                                                                       };
+//         socket.on('game added', function (game) {
+//             var row = $('tr');
+  //           row.append($('td').html = game.name);
+    //         row.append($('td').html = game._Creator);
+      //       row.append($('td').html = game.HasStarted);
+        //     row.append($('td').html = game.Created);
+          //   row.append($('td').html = game._challenger);
+            // row.append($('td').html = "No challenger found");
+             //$('#games').append(row);
+            //console.log(game);
 
-                                                                                       $('#join').click(function(){
-                                                                                           console.log('Ge emit');
-                                                                                           io.emit('refresh all', status);
-                                                                                           
-                                                                                       });
-                                                                                  //});
+//            $("#games").find('tbody')
+  //          .append($('<tr>')
+    //            .append($('<td>').html = game.name)));
+//        });
+
+        function refresh() {
+            io.emit('refresh all', status);
+        };
+
+        $('#join').click(function(){
+            console.log('Ge emit');
+            io.emit('refresh all', status);
+            
+        });
+        //});
 
 </script>

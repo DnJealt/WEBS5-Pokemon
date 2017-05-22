@@ -76,8 +76,8 @@ var router = express.Router();
 
 var mongoose = require('mongoose');
 var Game = require('../models/games');
-var io = require('socket.io');
 var send = require('../models/headerAccept');
+var socket = require('../config/socket')();
 
 router.get('/', isLoggedIn, function(req, res, next){
     
@@ -93,6 +93,7 @@ router.get('/', isLoggedIn, function(req, res, next){
 });
 
 router.post('/', isLoggedIn, function(req, res, next){
+         
     if(!req.body.name){
         var err = new Error('Do you even request bro?');
         err.status = 400;
@@ -101,7 +102,8 @@ router.post('/', isLoggedIn, function(req, res, next){
         next();
     }
     else{
-        saveGame(req, res)        
+        saveGame(req, res, next);
+        next();
     }
 });
 
@@ -126,11 +128,13 @@ router.post('/delete', isAdmin, function(req, res, next){
 
 router.post('/:id/join', isLoggedIn, function(req, res, next){
     var id = req.params.id;
+    var pkmns;
     console.log('Voor findbyid: ' + id);
     if(id){
         // Game._challenger = req.user;
         // Game.find({id}).update
-        Math.floor((Math.random() * 721) + 1 );
+        pkmns.creator = Math.floor((Math.random() * 721) + 1 );
+        pkmns.challenger = Math.floor((Math.random() * 721) + 1 );
         
         Game.findByIdAndUpdate(id, { $set: { _challenger: req.user}}, { new: true}, function(err, gameupdate) {
             if (err) return handleError(err);
@@ -146,14 +150,14 @@ router.post('/:id/join', isLoggedIn, function(req, res, next){
     console.log('na findbyid: ' + id);
 });
 
-function saveGame(req, res){
+function saveGame(req, res, next){
     var newGame = new Game();   
     newGame.HasStarted = false;
     newGame.Name = req.body.name;
     newGame._creator = req.user;
     newGame.Created = new Date();
-                
-    newGame.save(function(error){
+    console.log("Saves game");            
+    newGame.save(function(error, game){
         if(error){
             res.status(400);
             req.page = 'games';
@@ -164,7 +168,9 @@ function saveGame(req, res){
         }
         else{
             // We're saved!
-            res.redirect('/game');
+            socket.gameAdded(game);
+            return;
+            // res.redirect('/game');
         }
     });
 }
