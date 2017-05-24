@@ -16,7 +16,7 @@ module.exports = {
 			case 'html':
 
 				res.setHeader('Content-Type', 'text/html');
-				console.log(req.data);
+				// console.log(req.data);
 				res.render(req.page, { title: req.pagetitle, message: req.message, data: { content: req.data, user: req.user } });	
 
 			break;

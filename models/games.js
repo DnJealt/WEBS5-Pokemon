@@ -4,9 +4,9 @@ var mongoose = require('mongoose');
 var gameSchema = new mongoose.Schema({
      Name: {type: String, unique: true, required: true},
      _creator: { type: mongoose.Schema.Types.Mixed, required: true },
-     creatorPokemon: [String],
+     creatorPokemon: { type: mongoose.Schema.Types.Mixed },
      _challenger: { type: mongoose.Schema.Types.Mixed },
-     challengerPokemon: [String],
+     challengerPokemon: { type: mongoose.Schema.Types.Mixed },
      Created: {type: Date,
           validate: notInFuture,
           required: true},

@@ -63,10 +63,10 @@ router.get('/pokemon/:pokemon', function(req, res, next) {
             pokemon.name = body.name;
             body = body.types;
 
-            pokemon.slot1 = body[0].type.name;
+            pokemon.type1 = body[0].type.name;
 
             if (body.length == 2){
-                pokemon.slot2 = body[1].type.name;
+                pokemon.type2 = body[1].type.name;
             }
 
             res.send(pokemon);
