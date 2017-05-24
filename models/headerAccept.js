@@ -9,6 +9,9 @@ module.exports = {
 			case 'json':
 
 				res.setHeader('Content-Type', 'application/json');
+				if(req.data.error){
+					res.status(400);
+				}
 				res.send(req.data);
 
 				break;

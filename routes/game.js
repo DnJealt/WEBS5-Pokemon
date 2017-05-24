@@ -102,13 +102,8 @@ router.post('/', isLoggedIn, function(req, res, next){
         next();
     }
     else{
-        saveGame(req, res, next);
-        res.end();
-        // // workaround for error handler
-        // var err = new Error('nada');
-        // err.status = 200;
-        // res.error = err;
-        // next();
+        saveGame(req, res);
+        // res.end();
     }
 });
 
@@ -136,26 +131,34 @@ router.post('/:id/join', isLoggedIn, function(req, res, next){
     var pkmns;
     console.log('Voor findbyid: ' + id);
     if(id){
-        // Game._challenger = req.user;
-        // Game.find({id}).update
-        pkmns.creator = Math.floor((Math.random() * 721) + 1 );
-        pkmns.challenger = Math.floor((Math.random() * 721) + 1 );
-        
-        Game.findByIdAndUpdate(id, { $set: { _challenger: req.user}}, { new: true}, function(err, gameupdate) {
-            if (err) return handleError(err);
-            res.send(gameupdate);
-            console.log('in findbyid: ' + id);
-            res.redirect('/game');
-            // <script src="/socket.io/socket.io.js"></script>
-            // var socket = io.connect('http://localhost');
-                // io.emit('refresh');
+       Game.findById(id, function(error, response){
+            if(error){
+                req.data = {error: "Game not found"};
+                req.page = "games"
+                req.pagetitle = "Games"
+                req.message = "Game not found"
+                send.response(req, res);
+            }
+            else{
+                // an == operator does not suffice because of the MongoDB ObjectID custom type, therefore use equals
+                if(response._creator._id.equals(req.user._id)){
+                    req.data = {error: "cannot join your own game"};
+                    req.page = "games"
+                    req.pagetitle = "Games"
+                    req.message = "Cannot join your own game"
+                    send.response(req, res);
+                }
+                else{
+                    response._challenger = req.user;
+                    response.save();
+                    res.redirect('/game');
+                }
+            }
         });
-        
-    };
-    console.log('na findbyid: ' + id);
+    }
 });
 
-function saveGame(req, res, next){
+function saveGame(req, res){
     var newGame = new Game();   
     newGame.HasStarted = false;
     newGame.Name = req.body.name;
@@ -173,9 +176,9 @@ function saveGame(req, res, next){
         }
         else{
             // We're saved!
-            socket.gameAdded(game);
+            // socket.gameAdded(game);
             // return;
-            // res.redirect('/game');
+            res.redirect('/game');
         }
     });
 }
@@ -193,7 +196,7 @@ function isLoggedIn(req, res, next) {
     res.redirect('/');
 }
 
-// route middleware to make sure a user is logged in
+// route middleware to make sure a user is admin
 function isAdmin(req, res, next) {
     console.log(req.user)
     if(req.user){
