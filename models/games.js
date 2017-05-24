@@ -2,13 +2,21 @@
 var mongoose = require('mongoose');
 
 var gameSchema = new mongoose.Schema({
-     Name: {type: String, unique: true},
-     _creator: { type: mongoose.Schema.Types.Mixed },
+     Name: {type: String, unique: true, required: true},
+     _creator: { type: mongoose.Schema.Types.Mixed, required: true },
      creatorPokemon: [String],
      _challenger: { type: mongoose.Schema.Types.Mixed },
      challengerPokemon: [String],
-     Created: Date,
-     HasStarted: Boolean
+     Created: {type: Date,
+          validate: notInFuture,
+          required: true},
+     HasStarted: {type:Boolean, required: true}
 });
+
+
+
+function notInFuture (date){
+   return date <= new Date;
+}
 
 module.exports = mongoose.model('Game', gameSchema);    
