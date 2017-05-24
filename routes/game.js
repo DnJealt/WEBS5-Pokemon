@@ -78,6 +78,8 @@ var mongoose = require('mongoose');
 var Game = require('../models/games');
 var send = require('../models/headerAccept');
 var socket = require('../config/socket')();
+var async = require('async');
+var request = require('request');
 
 router.get('/', isLoggedIn, function(req, res, next){
     
@@ -149,14 +151,45 @@ router.post('/:id/join', isLoggedIn, function(req, res, next){
                     send.response(req, res);
                 }
                 else{
-                    response._challenger = req.user;
-                    response.save();
-                    res.redirect('/game');
+                    // All good, we can join now
+                    response._challenger = req.user; 
+
+                    //generate 2 random pokemon IDs
+                    const ids = [
+                        Math.floor((Math.random() * 721) + 1 ),
+                        Math.floor((Math.random() * 721) + 1 )
+                    ];
+
+                    // Make sure that the async requests are waited on
+                    async.map(ids, getPokemon, function(err, result){
+                        if (err){
+                            res.send({error: err});
+                        } 
+                        response.creatorPokemon = result[0];
+                        response.challengerPokemon = result[1];
+                        response.save();
+                        res.redirect('/game');
+                    });                   
                 }
             }
         });
     }
 });
+
+router.post('/:id/start', isLoggedIn, function(req, res, next){
+   
+});
+
+function getPokemon(id, callback){
+    const options = {
+        url: 'http://localhost:3000/pokemon/' + id,
+        json: true
+    };
+    request(options,
+    function(err,res,body){
+        callback(err, body);
+    });   
+}
 
 function saveGame(req, res){
     var newGame = new Game();   

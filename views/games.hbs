@@ -34,25 +34,25 @@
                     <td>{{Created}}</td>
                     {{#if _challenger.local.email}}
                     <td>{{_challenger.local.email}}</td><td>
-                            <form action="/game/watch" method="get">
+                            <form action="/game/{{_id}}/start" method="post">
                                 <input type="hidden" value="{{_id}}" name="id">
-                                <button type="button" id='watch' class="btn btn-lg"> Watch game</button>
+                                <button type="submit" id='start' class="btn btn-lg"> Start game</button>
                             </form>
                         </td>
                         {{else if _challenger.google.email}}
                         <td>{{_challenger.google.email}}</td>
                         <td>
-                            <form action="/game/watch" method="get">
+                           <form action="/game/{{_id}}/start" method="post">
                                 <input type="hidden" value="{{_id}}" name="id">
-                                <button type="button" id='watch' class="btn btn-lg"> Watch game</button>
+                                <button type="submit" id='start' class="btn btn-lg"> Start game</button>
                             </form>
                         </td>
                         {{else if _challenger.facebook.email}}
                         <td>{{_challenger.facebook.email}}</td>
                         <td>
-                            <form action="/game/watch" method="get">
+                            <form action="/game/{{_id}}/start" method="post">
                                 <input type="hidden" value="{{_id}}" name="id">
-                                <button type="button" id='watch' class="btn btn-lg"> Watch game</button>
+                                <button type="submit" id='start' class="btn btn-lg"> Start game</button>
                             </form>
                         </td>
                         {{else}}
@@ -99,25 +99,25 @@
                         {{#if _challenger.local.email}}
                         <td>{{_challenger.local.email}}</td>
                         <td>
-                            <form action="/game/watch" method="get">
+                            <form action="/game/{{_id}}/start" method="post">
                                 <input type="hidden" value="{{_id}}" name="id">
-                                <button type="button" id='watch' class="btn btn-lg"> Watch game</button>
+                                <button type="submit" id='start' class="btn btn-lg"> Start game</button>
                             </form>
                         </td>
                         {{else if _challenger.google.email}}
                         <td>{{_challenger.google.email}}</td>
                         <td>
-                            <form action="/game/watch" method="get">
+                            <form action="/game/{{_id}}/start" method="post">
                                 <input type="hidden" value="{{_id}}" name="id">
-                                <button type="button" id='watch' class="btn btn-lg"> Watch game</button>
+                                <button type="submit" id='start' class="btn btn-lg"> Start game</button>
                             </form>
                         </td>
                         {{else if _challenger.facebook.email}}
                         <td>{{_challenger.facebook.email}}</td>
                         <td>
-                            <form action="/game/watch" method="get">
+                            <form action="/game/{{_id}}/start" method="post">
                                 <input type="hidden" value="{{_id}}" name="id">
-                                <button type="button" id='watch' class="btn btn-lg"> Watch game</button>
+                                <button type="submit" id='start' class="btn btn-lg"> Start game</button>
                             </form>
                         </td>
                         {{else}}

@@ -49,7 +49,7 @@ var express = require('express');
 var router = express.Router();
 var request = require('request');
 
-router.get('/pokemon/:pokemon', function(req, res, next) {
+router.get('/:pokemon', function(req, res, next) {
     var pkmn = req.params.pokemon;
     var pokemon = {}
     // console.log('hallo: ' + req.params.pokemon);
