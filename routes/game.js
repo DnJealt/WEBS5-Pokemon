@@ -81,6 +81,9 @@ var socket = require('../config/socket')();
 var async = require('async');
 var request = require('request');
 
+var protocol;
+var host;
+
 router.get('/', isLoggedIn, function(req, res, next){
     
     var query = Game.find({});
@@ -131,6 +134,11 @@ router.post('/delete', isAdmin, function(req, res, next){
 router.post('/:id/join', isLoggedIn, function(req, res, next){
     var id = req.params.id;
     var pkmns;
+
+    // Fetch the protocol and host for dynamic URLs
+    protocol = req.protocol;
+    host = req.get('host');
+
     console.log('Voor findbyid: ' + id);
     if(id){
        Game.findById(id, function(error, response){
@@ -182,8 +190,9 @@ router.post('/:id/start', isLoggedIn, function(req, res, next){
 
 function getPokemon(id, callback){
     const options = {
-        url: 'http://localhost:3000/pokemon/' + id,
-        json: true
+        url: protocol + '://' + host + '/pokemon/' + id,
+        json: true,
+        method: "GET" //not really required, GET is default
     };
     request(options,
     function(err,res,body){
