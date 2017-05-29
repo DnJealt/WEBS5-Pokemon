@@ -80,6 +80,7 @@ var send = require('../models/headerAccept');
 var socket = require('../config/socket')();
 var async = require('async');
 var request = require('request');
+var simulator = require('../models/simulator');
 
 var protocol;
 var host;
@@ -150,7 +151,7 @@ router.post('/:id/join', isLoggedIn, function(req, res, next){
                 send.response(req, res);
             }
             else{
-                // an == operator does not suffice because of the MongoDB ObjectID custom type, therefore use equals
+                // An == operator does not suffice because of the MongoDB ObjectID custom type, therefore use .equals()
                 if(response._creator._id.equals(req.user._id)){
                     req.data = {error: "cannot join your own game"};
                     req.page = "games"
@@ -162,7 +163,7 @@ router.post('/:id/join', isLoggedIn, function(req, res, next){
                     // All good, we can join now
                     response._challenger = req.user; 
 
-                    //generate 2 random pokemon IDs
+                    // Generate 2 random pokemon IDs
                     const ids = [
                         Math.floor((Math.random() * 721) + 1 ),
                         Math.floor((Math.random() * 721) + 1 )
@@ -184,11 +185,26 @@ router.post('/:id/join', isLoggedIn, function(req, res, next){
     }
 });
 
+// Start, AKA simulate
 router.post('/:id/start', isLoggedIn, function(req, res, next){
-   
+    var id = req.params.id;
+    if(id){
+       Game.findById(id, function(error, response){
+            if(error){
+                req.data = {error: "Game not found"};
+                req.page = "games"
+                req.pagetitle = "Games"
+                req.message = "Game not found"
+                send.response(req, res);
+            }
+            else{
+                // Begin simulation process
+
+            }
 });
 
 function getPokemon(id, callback){
+    // Pulled the const part from StackOverflow
     const options = {
         url: protocol + '://' + host + '/pokemon/' + id,
         json: true,
