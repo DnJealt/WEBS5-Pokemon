@@ -146,16 +146,35 @@
             <h3>Create Game:</h3>
         </div>
         <div class="row">
-            <form action="/game" method="post">
-            <div class="form-group">
-                <label>Game Name</label>
-                <input type="text" placeholder="Game name here.." class="form-control" name="name" required="required">
-            </div>
+            <form action="/game" method="post" id="postgame">
+                <div class="form-group">
+                    <label>Game Name</label>
+                    <p><input type="text" placeholder="Game name here.." class="form-control" name="name" required="required"></p>
+                    <input type="submit" class="btn btn-warning btn-lg" value="Create!">
+                </div>
 
-            <button type="submit" class="btn btn-warning btn-lg" >Create!</button>
+                {{!--<button type="submit" class="btn btn-warning btn-lg" >Create!</button>--}}
 
-                        </form>
-    </div>
+            </form>
+            <script type="text/javascript">
+                debugger;
+                $( "#postgame" ).submit(function(  event ) {
+
+                    event.preventDefault();
+
+                    var $form = $( this ),
+                    term = $form.find( "input[name='name']" ).val(),
+                    url = $form.attr( "action" );
+
+                    var posting = $.post(url, { s: term } );
+
+                    posting.done(function( data ) {
+                        var content = $( data ).find( "#content" );
+                    });
+                });
+            </script>
+
+        </div>
 
 </div>
 </div>
