@@ -104,6 +104,7 @@
 var express = require('express');
 var router = express.Router();
 var User = require('../models/users');
+var send = require('../models/headerAccept');
 
 module.exports = function(app, passport) {
 
@@ -179,7 +180,11 @@ module.exports = function(app, passport) {
     // we will want this protected so you have to be logged in to visit
     // we will use route middleware to verify this (the isLoggedIn function)
     app.get('/user/profile', isLoggedIn, function(req, res) {
-        res.render('profile', { user: req.user});
+        // Initiate accept header middleware
+        req.page = 'profile';
+        req.pagetitle = 'Profile Page';
+        req.data = req.user;
+        send.response(req, res);
     });
 
     // =====================================
