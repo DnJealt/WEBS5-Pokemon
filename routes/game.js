@@ -201,6 +201,8 @@ router.post('/:id/start', isLoggedIn, function(req, res, next){
                 // Begin simulation process
 
             }
+    })};
+       
 });
 
 function getPokemon(id, callback){

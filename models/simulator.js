@@ -1,5 +1,5 @@
-var offendingMatchups = require('offendingMatchups');
-var defendingMatchups = require('defendingMatchups');
+var offendingMatchups = require('./offendingMatchups');
+var defendingMatchups = require('./defendingMatchups');
 
 module.exports = function(){
     var simulate = function(pokemon1, pokemon2){
