@@ -85,6 +85,8 @@ var simulator = require('../models/simulator');
 var protocol;
 var host;
 
+var countPokemon = 721;
+
 router.get('/', isLoggedIn, function(req, res, next){
     
     var query = Game.find({});
@@ -165,8 +167,8 @@ router.post('/:id/join', isLoggedIn, function(req, res, next){
 
                     // Generate 2 random pokemon IDs
                     const ids = [
-                        Math.floor((Math.random() * 721) + 1 ),
-                        Math.floor((Math.random() * 721) + 1 )
+                        Math.floor((Math.random() * countPokemon) + 1 ),
+                        Math.floor((Math.random() * countPokemon) + 1 )
                     ];
 
                     // Make sure that the async requests are waited on
@@ -287,7 +289,7 @@ function saveGame(req, res){
         }
         else{
             // We're saved!
-            // socket.gameAdded(game);
+            socket.gameAdded(game);
             // return;
             res.redirect('/game');
         }

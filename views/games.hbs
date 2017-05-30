@@ -1,3 +1,4 @@
+<script src="javascripts/jquery.js"></script>
  {{#if message}}
 <!-- show any messages that come back with saving a game -->
 <div class="row">
@@ -157,20 +158,19 @@
 
             </form>
             <script type="text/javascript">
-                debugger;
                 $( "#postgame" ).submit(function(  event ) {
-
+                    
                     event.preventDefault();
-
+                    
                     var $form = $( this ),
                     term = $form.find( "input[name='name']" ).val(),
                     url = $form.attr( "action" );
 
-                    var posting = $.post(url, { s: term } );
+                    var posting = $.post(url, { name: term } );
 
-                    posting.done(function( data ) {
-                        var content = $( data ).find( "#content" );
-                    });
+                    //posting.done(function( data ) {
+                        
+                    //})
                 });
             </script>
 
@@ -192,7 +192,9 @@
             $("#show_comments").append(msg + '<br /><br />');
         });
 
-//         socket.on('game added', function (game) {
+        
+         socket.on('game added', function (game) {
+             
 //             var row = $('tr');
   //           row.append($('td').html = game.name);
     //         row.append($('td').html = game._Creator);
@@ -200,13 +202,29 @@
         //     row.append($('td').html = game.Created);
           //   row.append($('td').html = game._challenger);
             // row.append($('td').html = "No challenger found");
-             //$('#games').append(row);
-            //console.log(game);
+            // $('#games').append(row);
+            // console.log(game);
 
 //            $("#games").find('tbody')
   //          .append($('<tr>')
-    //            .append($('<td>').html = game.name)));
-//        });
+    //            .append($('<td>').html = game.name));
+            debugger;
+            var creatorname;
+            if(game._creator.local.email)
+            {
+                creatorname = game._creator.local.email;
+            }
+            else if (game._creator.google.email)
+            {
+                creatorname = game._creator.google.email;
+            }
+            else if (game._creator.facebook.email)
+            {
+                creatorname = game._creator.facebook.email;
+            }
+
+            $('#games > tbody:last-child').append('<tr><td>'+ game.Name + '</td><td>' + creatorname + '</td><td>' + game.HasStarted + '</td><td>'+ game.Created + '</td><td>refresh to join the game</td><td>No challenger found</td></tr>');
+        });
 
         function refresh() {
             io.emit('refresh all', status);
