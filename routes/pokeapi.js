@@ -47,18 +47,16 @@
 */
 var express = require('express');
 var router = express.Router();
-var request = require('request');
 
 router.get('/:pokemon', function(req, res, next) {
     var pkmn = req.params.pokemon;
     var pokemon = {}
-    // console.log('hallo: ' + req.params.pokemon);
 
     request('https://pokeapi.co/api/v2/pokemon/' + pkmn +'/', function(error, response, body) {
         // console.log('statusCode: ', response && response.statusCode);
         
         // Check if we got an OK response, errors would make it crash
-        if(response.statusCode > 199 && response.statusCode < 300)
+        if(response.statusCode >= 200 && response.statusCode < 300)
         {
             body = JSON.parse(body);
             pokemon.name = body.name;

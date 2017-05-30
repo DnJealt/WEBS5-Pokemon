@@ -188,6 +188,12 @@ router.post('/:id/join', isLoggedIn, function(req, res, next){
 // Start, AKA simulate
 router.post('/:id/start', isLoggedIn, function(req, res, next){
     var id = req.params.id;
+
+    var outcome = {
+        status: "",
+        winner: null,
+        loser: null       
+    };
     if(id){
        Game.findById(id, function(error, response){
             if(error){
@@ -198,11 +204,56 @@ router.post('/:id/start', isLoggedIn, function(req, res, next){
                 send.response(req, res);
             }
             else{
-                // Begin simulation process
+                // Do two fights, compare the result
+                var fight1 = simulator.simulate(response.creatorPokemon, response.challengerPokemon);
+                var fight2 = simulator.simulate(response.challengerPokemon, response.creatorPokemon); // Other way around
 
+                if(fight1 == fight2){
+                    outcome.status = "draw";
+                }
+                else if(fight1 > fight2){
+                    outcome.status = response.creatorPokemon.name + " wins!";
+                    outcome.winner = response._creator;
+                    outcome.loser = response._challenger;
+                }
+                else if(fight1 < fight2){
+                    outcome.status = response.challengerPokemon.name + " wins!";
+                    outcome.winner = response._challenger;
+                    outcome.loser = response._creator;
+                }
+
+                res.send(outcome);
             }
     })};
        
+});
+
+router.get('/simulate', function(req, res, next){
+    var testpokemon1 = {
+        name: "Meowth",
+        type1: "normal"        
+    }
+
+    var testpokemon2 = {
+        name: "Aggron",
+        type1: "rock",
+        type2: "steel"
+    }
+
+    // Do two fights, compare the result
+    var fight1 = simulator.simulate(testpokemon1,testpokemon2);
+    var fight2 = simulator.simulate(testpokemon2,testpokemon1); // Other way around
+
+    if(fight1 == fight2){
+        res.send("its a draw");
+    }
+    else if(fight1 > fight2){
+        res.send("pokemon 1 won!");
+    }
+    else if(fight1 < fight2){
+        res.send("pokemon 2 won!");
+    }
+
 });
 
 function getPokemon(id, callback){
