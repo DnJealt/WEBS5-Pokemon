@@ -210,15 +210,15 @@
     //            .append($('<td>').html = game.name));
             debugger;
             var creatorname;
-            if(game._creator.local.email)
+            if(game._creator.local)
             {
                 creatorname = game._creator.local.email;
             }
-            else if (game._creator.google.email)
+            else if (game._creator.google)
             {
                 creatorname = game._creator.google.email;
             }
-            else if (game._creator.facebook.email)
+            else if (game._creator.facebook)
             {
                 creatorname = game._creator.facebook.email;
             }
