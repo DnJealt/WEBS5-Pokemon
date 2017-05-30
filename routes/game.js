@@ -211,7 +211,7 @@ router.post('/:id/start', isLoggedIn, function(req, res, next){
                 var fight2 = simulator.simulate(response.challengerPokemon, response.creatorPokemon); // Other way around this time
 
                 if(fight1 == fight2){
-                    outcome.status = "draw";
+                    outcome.status = "It is a draw!";
                 }
                 else if(fight1 > fight2){
                     outcome.status = response.creatorPokemon.name + " wins!";
@@ -227,6 +227,7 @@ router.post('/:id/start', isLoggedIn, function(req, res, next){
                 req.page = 'games';
                 req.pagetitle = 'Games';
                 req.data = outcome;
+                req.message = outcome.status;
                 send.response(req, res);
             }
     })};
