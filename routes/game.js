@@ -192,9 +192,9 @@ router.post('/:id/start', isLoggedIn, function(req, res, next){
     var id = req.params.id;
 
     var outcome = {
-        status: "",
-        winner: null,
-        loser: null       
+        status: "", // a string to show who wins
+        winner: null, // a user
+        loser: null   // a user    
     };
     if(id){
        Game.findById(id, function(error, response){
@@ -224,7 +224,10 @@ router.post('/:id/start', isLoggedIn, function(req, res, next){
                     outcome.loser = response._creator;
                 }
 
-                res.send(outcome);
+                req.page = 'games';
+                req.pagetitle = 'Games';
+                req.data = outcome;
+                send.response(req, res);
             }
     })};
        
