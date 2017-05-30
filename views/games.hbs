@@ -153,9 +153,6 @@
                     <p><input type="text" placeholder="Game name here.." class="form-control" name="name" required="required"></p>
                     <input type="submit" class="btn btn-warning btn-lg" value="Create!">
                 </div>
-
-                {{!--<button type="submit" class="btn btn-warning btn-lg" >Create!</button>--}}
-
             </form>
             <script type="text/javascript">
                 $( "#postgame" ).submit(function(  event ) {
@@ -167,10 +164,6 @@
                     url = $form.attr( "action" );
 
                     var posting = $.post(url, { name: term } );
-
-                    //posting.done(function( data ) {
-                        
-                    //})
                 });
             </script>
 
@@ -181,8 +174,7 @@
 
 <script src="https://code.jquery.com/jquery-1.10.2.js"></script>
 <script src="/socket.io/socket.io.js"></script>
-<script>
-    //$(document).ready(function () {
+<script type="text/javascript">
         var socket = io();
         socket.on('hoi', function(data){
             alert(data);
@@ -194,20 +186,6 @@
 
         
          socket.on('game added', function (game) {
-             
-//             var row = $('tr');
-  //           row.append($('td').html = game.name);
-    //         row.append($('td').html = game._Creator);
-      //       row.append($('td').html = game.HasStarted);
-        //     row.append($('td').html = game.Created);
-          //   row.append($('td').html = game._challenger);
-            // row.append($('td').html = "No challenger found");
-            // $('#games').append(row);
-            // console.log(game);
-
-//            $("#games").find('tbody')
-  //          .append($('<tr>')
-    //            .append($('<td>').html = game.name));
             var creatorname;
             if(game._creator.local)
             {
@@ -215,11 +193,11 @@
             }
             else if (game._creator.google)
             {
-                creatorname = game._creator.google.email;
+                creatorname = game._creator.google.name;
             }
             else if (game._creator.facebook)
             {
-                creatorname = game._creator.facebook.email;
+                creatorname = game._creator.facebook.name;
             }
 
             $('#games > tbody:last-child').append('<tr><td>'+ game.Name + '</td><td>' + creatorname + '</td><td>' + game.HasStarted + '</td><td>'+ game.Created + '</td><td>refresh to join the game</td><td>No challenger found</td></tr>');
@@ -234,6 +212,4 @@
             io.emit('refresh all', status);
             
         });
-        //});
-
 </script>
