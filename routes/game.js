@@ -206,7 +206,7 @@ router.post('/:id/start', isLoggedIn, function(req, res, next){
             else{
                 // Do two fights, compare the result
                 var fight1 = simulator.simulate(response.creatorPokemon, response.challengerPokemon);
-                var fight2 = simulator.simulate(response.challengerPokemon, response.creatorPokemon); // Other way around
+                var fight2 = simulator.simulate(response.challengerPokemon, response.creatorPokemon); // Other way around this time
 
                 if(fight1 == fight2){
                     outcome.status = "draw";
