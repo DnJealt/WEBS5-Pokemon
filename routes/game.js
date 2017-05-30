@@ -224,6 +224,9 @@ router.post('/:id/start', isLoggedIn, function(req, res, next){
                     outcome.loser = response._creator;
                 }
 
+                response.HasStarted = true;
+                reponse.save();
+
                 req.page = 'games';
                 req.pagetitle = 'Games';
                 req.data = outcome;
