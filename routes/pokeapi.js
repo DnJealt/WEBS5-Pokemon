@@ -46,6 +46,7 @@
  *         description: types returned in a array for get/do no/weak/strong damage
 */
 var express = require('express');
+var request = require('request');
 var router = express.Router();
 
 router.get('/:pokemon', function(req, res, next) {

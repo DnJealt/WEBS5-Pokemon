@@ -217,15 +217,17 @@ router.post('/:id/start', isLoggedIn, function(req, res, next){
                     outcome.status = response.creatorPokemon.name + " wins!";
                     outcome.winner = response._creator;
                     outcome.loser = response._challenger;
+                    response.winnerPokemon = response.creatorPokemon.name;
                 }
                 else if(fight1 < fight2){
                     outcome.status = response.challengerPokemon.name + " wins!";
                     outcome.winner = response._challenger;
                     outcome.loser = response._creator;
+                    response.winnerPokemon = response.challengerPokemon.name;
                 }
 
                 response.HasStarted = true;
-                reponse.save();
+                response.save();
 
                 req.page = 'games';
                 req.pagetitle = 'Games';

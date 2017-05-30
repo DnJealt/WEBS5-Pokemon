@@ -18,7 +18,7 @@
                     <th>Started</th>
                     <th>Created On</th>
                     <th>Challenger</th>
-                    <th>Watch</th>
+                    <th>Start</th>
                     <th>Delete Game</th>
                 </tr>
                 {{#each data.content}}
@@ -34,28 +34,41 @@
                     <td>{{HasStarted}}</td>
                     <td>{{Created}}</td>
                     {{#if _challenger.local.email}}
-                    <td>{{_challenger.local.email}}</td><td>
+                    <td>{{_challenger.local.email}}</td>
+                        {{#if HasStarted}}
+                        <td>Creator: {{creatorPokemon.name}} vs Challenger: {{challengerPokemon.name}} Winner: {{winnerPokemon}}</td>
+                        {{else}}
+                        <td>
                             <form action="/game/{{_id}}/start" method="post">
                                 <input type="hidden" value="{{_id}}" name="id">
                                 <button type="submit" id='start' class="btn btn-lg"> Start game</button>
                             </form>
                         </td>
+                        {{/if}}
                         {{else if _challenger.google.email}}
                         <td>{{_challenger.google.email}}</td>
-                        <td>
-                           <form action="/game/{{_id}}/start" method="post">
-                                <input type="hidden" value="{{_id}}" name="id">
-                                <button type="submit" id='start' class="btn btn-lg"> Start game</button>
-                            </form>
-                        </td>
-                        {{else if _challenger.facebook.email}}
-                        <td>{{_challenger.facebook.email}}</td>
+                        {{#if HasStarted}}
+                        <td>Creator: {{creatorPokemon.name}} vs Challenger: {{challengerPokemon.name}} Winner: {{winnerPokemon}}</td>
+                        {{else}}
                         <td>
                             <form action="/game/{{_id}}/start" method="post">
                                 <input type="hidden" value="{{_id}}" name="id">
                                 <button type="submit" id='start' class="btn btn-lg"> Start game</button>
                             </form>
                         </td>
+                        {{/if}}
+                        {{else if _challenger.facebook.email}}
+                        <td>{{_challenger.facebook.email}}</td>
+                        {{#if HasStarted}}
+                        <td>Creator: {{creatorPokemon.name}} vs Challenger: {{challengerPokemon.name}} Winner: {{winnerPokemon}}</td>
+                        {{else}}
+                        <td>
+                            <form action="/game/{{_id}}/start" method="post">
+                                <input type="hidden" value="{{_id}}" name="id">
+                                <button type="submit" id='start' class="btn btn-lg"> Start game</button>
+                            </form>
+                        </td>
+                        {{/if}}
                         {{else}}
                         <td>
                             <form action="/game/{{_id}}/join" method="post">
@@ -83,7 +96,7 @@
                         <th>Started</th>
                         <th>Created On</th>
                         <th>Challenger</th>
-                        <th>Watch</th>
+                        <th>Start</th>
                     </tr>
                     {{#each data.content}}
                     <tr>
@@ -99,31 +112,43 @@
                         <td>{{Created}}</td>
                         {{#if _challenger.local.email}}
                         <td>{{_challenger.local.email}}</td>
-                        <td>
-                            <form action="/game/{{_id}}/start" method="post">
-                                <input type="hidden" value="{{_id}}" name="id">
-                                <button type="submit" id='start' class="btn btn-lg"> Start game</button>
-                            </form>
-                        </td>
-                        {{else if _challenger.google.email}}
-                        <td>{{_challenger.google.email}}</td>
-                        <td>
-                            <form action="/game/{{_id}}/start" method="post">
-                                <input type="hidden" value="{{_id}}" name="id">
-                                <button type="submit" id='start' class="btn btn-lg"> Start game</button>
-                            </form>
-                        </td>
-                        {{else if _challenger.facebook.email}}
-                        <td>{{_challenger.facebook.email}}</td>
-                        <td>
-                            <form action="/game/{{_id}}/start" method="post">
-                                <input type="hidden" value="{{_id}}" name="id">
-                                <button type="submit" id='start' class="btn btn-lg"> Start game</button>
-                            </form>
-                        </td>
+                        {{#if HasStarted}}
+                        <td>Creator: {{creatorPokemon.name}} vs Challenger: {{challengerPokemon.name}} Winner: {{winnerPokemon}}</td>
                         {{else}}
                         <td>
-                            <form action="/game/join" method="post">
+                            <form action="/game/{{_id}}/start" method="post">
+                                <input type="hidden" value="{{_id}}" name="id">
+                                <button type="submit" id='start' class="btn btn-lg"> Start game</button>
+                            </form>
+                        </td>
+                        {{/if}}
+                        {{else if _challenger.google.email}}
+                        <td>{{_challenger.google.email}}</td>
+                        {{#if HasStarted}}
+                        <td>Creator: {{creatorPokemon.name}} vs Challenger: {{challengerPokemon.name}} Winner: {{winnerPokemon}}</td>
+                        {{else}}
+                        <td>
+                            <form action="/game/{{_id}}/start" method="post">
+                                <input type="hidden" value="{{_id}}" name="id">
+                                <button type="submit" id='start' class="btn btn-lg"> Start game</button>
+                            </form>
+                        </td>
+                        {{/if}}
+                        {{else if _challenger.facebook.email}}
+                        <td>{{_challenger.facebook.email}}</td>
+                        {{#if HasStarted}}
+                        <td>Creator: {{creatorPokemon.name}} vs Challenger: {{challengerPokemon.name}} Winner: {{winnerPokemon}}</td>
+                        {{else}}
+                        <td>
+                            <form action="/game/{{_id}}/start" method="post">
+                                <input type="hidden" value="{{_id}}" name="id">
+                                <button type="submit" id='start' class="btn btn-lg"> Start game</button>
+                            </form>
+                        </td>
+                        {{/if}}
+                        {{else}}
+                        <td>
+                            <form action="/game/{{_id}}/join" method="post">
                                 <input type="hidden" value="{{_id}}" name="id" />
                                 <button type="submit" id='join' class="btn btn-success" >Join</buton>
                             </form>

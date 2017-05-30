@@ -10,7 +10,8 @@ var gameSchema = new mongoose.Schema({
      Created: {type: Date,
           validate: notInFuture,
           required: true},
-     HasStarted: {type:Boolean, required: true}
+     HasStarted: {type:Boolean, required: true},
+     winnerPokemon: String
 });
 
 
