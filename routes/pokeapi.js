@@ -68,11 +68,11 @@ router.get('/:pokemon', function(req, res, next) {
             if (body.length == 2){
                 pokemon.type2 = body[1].type.name;
             }
-
             res.send(pokemon);
         }
         else
         {
+            res.status(response.statusCode);
             res.send({error: pkmn + " not found"});
         }
 

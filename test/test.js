@@ -26,7 +26,7 @@ describe('Testing pokeapi route', function(){
             });
         });
 
-        it('should return a 404 (pokemon)', function(done){
+        it('should return a 404 (pokemon/)', function(done){
             makeRequest('/pokemon', 404, function(err, res){
                 if(err){return done(err);}
                 done();

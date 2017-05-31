@@ -8,19 +8,19 @@
  *     produces:
  *       - application/json
  *     responses:
- *       200:
+ *       400:
  *         description: Show error "Please use /attack or /defend"
  * 
  * /type/attack:
  *   get:
  *     tags:
  *        - type
- *     description: Jelte?
+ *     description: Returns all offending matchups
  *     produces:
  *       - application/json
  *     responses:
  *       200:
- *         description: Jelte?
+ *         description: Returns all offending matchups
  * 
  * /type/attack/:type:
  *   get:
@@ -43,12 +43,14 @@
  *   get:
  *     tags:
  *        - type
- *     description: Jelte?
+ *     description: Returns all defending matchups with their damage multiplier
  *     produces:
  *       - application/json
  *     responses:
  *       200:
- *         description: Jelte?
+ *         description: Returns all defending matchups with their respective damage multiplier
+ *       400:
+ *         description: Type not found
  * 
  * /type/defend/:type:
  *   get:
@@ -124,11 +126,6 @@ router.get('/defend/:type', function(req,res,next){
     res.error = err;
     next();
   }
-})
-
-
-
-
-
+});
 
 module.exports = router;
