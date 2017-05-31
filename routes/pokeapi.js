@@ -1,49 +1,28 @@
 /**
  * @swagger
- * /pokeapi/pokemon/:pokemon:
+ * /pokemon/:pokemon:
  *   get:
  *     tags:
  *        - pokemon
- *     description: Get the types of the specific pokemon
+ *     description: Get the name and types of the specific pokemon
  *     produces:
  *       - application/json
  *     parameters:
- *       - name: pokemon
+ *       - name: pokemon id
  *         in: path
- *         description: String that defines the pokemon
+ *         description: Int that defines the pokemon id
+ *         required: true
+ *         type: int
+ *       - name: pokemon name
+ *         in: path
+ *         description: String that defines the pokemon name
  *         required: true
  *         type: string
  *     responses:
  *       200:
- *         description: types returned from specific pokemon
- * 
- * /pokeapi/types/:type:
- *   get:
- *     tags:
- *        - pokemon
- *     description: Get the types that get (no/weak/strong) damage from the specific type, Get the types that do (no/weak/strong) damage to the specific type
- *     produces:
- *       - application/json
- *     parameters:
- *       - name: type
- *         in: path
- *         description: String that defines the type
- *         required: true
- *         type: string
- *     responses:
- *       200:
- *         description: types returned in a array for get/do no/weak/strong damage
- * 
- * /pokeapi/allpokemon:
- *   get:
- *     tags:
- *        - pokemon
- *     description: Get all the available pokemon
- *     produces:
- *       - application/json
- *     responses:
- *       200:
- *         description: types returned in a array for get/do no/weak/strong damage
+ *         description: name and types returned from specific pokemon
+ *       400:
+ *         description: Only name or id is required, it will not work with both name and id
 */
 var express = require('express');
 var request = require('request');
