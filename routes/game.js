@@ -36,6 +36,7 @@
  *         description: Internal server error game not created
  * 
  * /game/delete:
+ *   post:
  *     tags:
  *       - games
  *     description: Deletes a game
@@ -53,7 +54,8 @@
  *       500:
  *         description: Internal server error game not deleted
  * 
- * /game/join:
+ * /game/:id/join:
+ *   post:
  *     tags:
  *       - games
  *     description: user can join a game
@@ -70,6 +72,25 @@
  *         description: game joined
  *       500:
  *         description: Internal server error game is not joined
+ * 
+ * /game/:id/start:
+ *   post:
+ *     tags:
+ *       - games
+ *     description: user can start a game
+ *     produces:
+ *       - application/json
+ *     parameters:
+ *       - name: isLoggedIn
+ *         description: Checking if a user is logged in
+ *         in: body
+ *         required: true
+ *         type: boolean
+ *     responses:
+ *       200:
+ *         description: game started
+ *       500:
+ *         description: Internal server error game has not started
  */
 var express = require('express');
 var router = express.Router();
