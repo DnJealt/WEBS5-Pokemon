@@ -69,7 +69,7 @@ describe('Testing pokeapi route', function(){
 
         it('should return a 200 (pokemon, aipom)', function(done){
 
-            makeRequest('/pokemon/aipom', 200, done);        
+            makeRequest('/aipom', 200, done);        
         });
 
         it('should not be a undefined array', function(done){
@@ -88,11 +88,11 @@ describe('Testing pokeapi route', function(){
 
             var type = 'psychic';
             
-            makeRequest('/pokemon/abra', 200, function(err, res){
+            makeRequest('/abra', 200, function(err, res){
                 if(err){return done(err);}
 
-                expect(res.body.slot1).to.not.be.undefined;
-                expect(res.body.slot1).to.include(type);
+                expect(res.body.type1).to.not.be.undefined;
+                expect(res.body.type1).to.include(type);
                 done();
             });
         });
@@ -102,13 +102,13 @@ describe('Testing pokeapi route', function(){
             var maintype = 'steel';
             var secondtype = 'ground';
            
-            makeRequest('/pokemon/steelix', 200, function(err, res){
+            makeRequest('/steelix', 200, function(err, res){
                 if(err){return done(err);}
 
-                expect(res.body.slot1).to.not.be.undefined;
-                expect(res.body.slot1).to.include(secondtype);
-                expect(res.body.slot2).to.not.be.undefined;
-                expect(res.body.slot2).to.include(maintype);
+                expect(res.body.type1).to.not.be.undefined;
+                expect(res.body.type1).to.include(secondtype);
+                expect(res.body.type2).to.not.be.undefined;
+                expect(res.body.type2).to.include(maintype);
                 done();
             });
         });
