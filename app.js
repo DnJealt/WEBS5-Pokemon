@@ -44,13 +44,6 @@ var options = {
 // initialize swagger-jsdoc
 var swaggerSpec = swaggerJSDoc(options);
 
-
-
-
-
-
-
-
 app.disable('x-powered-by');
 
 // view engine setup

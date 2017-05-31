@@ -260,30 +260,23 @@ router.post('/:id/start', isLoggedIn, function(req, res, next){
        
 });
 
-router.get('/simulate', function(req, res, next){
-    var testpokemon1 = {
-        name: "Meowth",
-        type1: "normal"        
-    }
-
-    var testpokemon2 = {
-        name: "Aggron",
-        type1: "rock",
-        type2: "steel"
-    }
-
+router.post('/simulate', function(req, res, next){
+    // Pokemon must consist of name, type1 and optionally a type2
+    var testpokemon1 = req.body.testpokemon1;
+    var testpokemon2 = req.body.testpokemon2;
+    
     // Do two fights, compare the result
     var fight1 = simulator.simulate(testpokemon1,testpokemon2);
     var fight2 = simulator.simulate(testpokemon2,testpokemon1); // Other way around
 
     if(fight1 == fight2){
-        res.send("its a draw");
+        res.send({winner: 'draw'});
     }
     else if(fight1 > fight2){
-        res.send("pokemon 1 won!");
+        res.send({winner: testpokemon1.name});
     }
     else if(fight1 < fight2){
-        res.send("pokemon 2 won!");
+        res.send({winner: testpokemon2.name});
     }
 
 });

@@ -10,7 +10,7 @@ module.exports = {
         'clientID'      : '646032003965-m3n49h5q1lq2b21pdcfhf268jr3v49e9.apps.googleusercontent.com',
         'clientSecret'  : 'KYHA3eKU8l0pWN8o7zSr5MQw',
         'callbackURL'   : 'https://webs5-pokemon.herokuapp.com/user/auth/google/callback'
-        // 'callbackURL'   : 'http://localhost:3000/user/auth/google/callback'
+        //'callbackURL'   : 'http://localhost:3000/user/auth/google/callback'
     }
 
 };
